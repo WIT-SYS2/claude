@@ -17,6 +17,7 @@
 #  confirmation_token     :string(255)
 #  confirmed_at           :datetime
 #  confirmation_sent_at   :datetime
+#  deleted_at             :datetime
 #  created_at             :datetime
 #  updated_at             :datetime
 #

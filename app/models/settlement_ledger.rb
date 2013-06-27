@@ -41,11 +41,14 @@ class SettlementLedger < ActiveRecord::Base
   private
 
   def assign_ledger_number
-    sequence = '001'
-    self.ledger_number = "#{Rails.configuration.ledger_number_prefix}#{sequence}"
-    while SettlementLedger.unscoped.exists?(ledger_number: self.ledger_number)
-      sequence.succ!
-      self.ledger_number = "#{Rails.configuration.ledger_number_prefix}#{sequence}"
+    latest = SettlementLedger.unscoped
+                             .where('ledger_number LIKE ?', "#{Rails.configuration.ledger_number_prefix}%")
+                             .order('ledger_number ASC')
+                             .first
+    if latest
+      self.ledger_number = latest.ledger_number.succ
+    else
+      self.ledger_number = "#{Rails.configuration.ledger_number_prefix}001"
     end
   end
 end

@@ -1,5 +1,6 @@
 Claude::Application.routes.draw do
   devise_for :users
+  resources :users, except: [:show, :edit, :update]
   resources :settlement_ledgers, except: [:show]
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -1,5 +1,3 @@
-<h1>TBT 精算書類管理台帳</h1>
-
 <table>
   <thead>
     <tr>
@@ -13,7 +11,9 @@
       <th>備考</th>
       <th>完了日付</th>
       <th></th>
-      <th></th>
+      <% if can? :destroy, :settlement_ledger %>
+        <th></th>
+      <% end %>
     </tr>
   </thead>
 
@@ -30,7 +30,9 @@
         <td><%= settlement_ledger.settlement_note %></td>
         <td><%= settlement_ledger.completed_at %></td>
         <td><%= link_to '編集', edit_settlement_ledger_path(settlement_ledger) %></td>
-        <td><%= link_to '削除', settlement_ledger, method: :delete, data: { confirm: '削除してよろしいですか？' } %></td>
+        <% if can? :destroy, :settlement_ledger %>
+          <td><%= link_to '削除', settlement_ledger, method: :delete, data: { confirm: '削除してよろしいですか？' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

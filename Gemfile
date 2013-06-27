@@ -28,6 +28,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 
 gem 'rails-i18n'
+gem 'cancan'
 gem 'devise', github: 'plataformatec/devise', branch: 'rails4'
 gem 'simple_form'
 

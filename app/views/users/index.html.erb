@@ -1,0 +1,24 @@
+<h1>ユーザ一覧</h1>
+
+<table class="ajax-table">
+  <thead>
+    <tr>
+      <th>名前</th>
+      <th>メールアドレス</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= link_to '削除', user, method: :delete, data: { confirm: '削除してよろしいですか？' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to '新規作成', new_user_path %>

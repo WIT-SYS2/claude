@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Claude</title>
+  <title>精算書類管理台帳システム --- くろーど ---</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <h1 id="logo"><%= link_to '精算書類管理台帳システム', '/' %></h1>
+  <div>
+    <% if user_signed_in? %>
+      <%= link_to 'パスワード変更', '#' %>
+      <%= link_to 'ログアウト', destroy_user_session_url, method: :delete %>
+    <% end %>
+  </div>
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>
 
