@@ -1,0 +1,21 @@
+<%= simple_form_for @settlement_ledger do |f| %>
+  <% if @settlement_ledger.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@settlement_ledger.errors.count, "error") %> prohibited this settlement_ledger from being saved:</h2>
+
+      <ul>
+      <% @settlement_ledger.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.input :content, label: '内容' %>
+  <%= f.input :note, label: '備考' %>
+  <%= f.input :price, label: '金額' %>
+  <%= f.input :application_date, label: '申請日付' %>
+  <%= f.input :applicant_user_id, label: '申請者' %>
+
+  <%= f.button :submit, value: '登録' %>
+<% end %>

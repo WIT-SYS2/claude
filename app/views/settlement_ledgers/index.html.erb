@@ -1,0 +1,41 @@
+<h1>TBT 精算書類管理台帳</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>台帳No</th>
+      <th>内容</th>
+      <th>備考</th>
+      <th>精算金額</th>
+      <th>申請日付</th>
+      <th>申請者</th>
+      <th>精算日付</th>
+      <th>備考</th>
+      <th>完了日付</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @settlement_ledgers.each do |settlement_ledger| %>
+      <tr>
+        <td><%= settlement_ledger.ledger_number %></td>
+        <td><%= settlement_ledger.content %></td>
+        <td><%= settlement_ledger.note %></td>
+        <td><%= number_with_delimiter(settlement_ledger.price) %></td>
+        <td><%= settlement_ledger.application_date %></td>
+        <td><%= settlement_ledger.applicant_user_id %></td>
+        <td><%= settlement_ledger.settlement_date %></td>
+        <td><%= settlement_ledger.settlement_note %></td>
+        <td><%= settlement_ledger.completed_at %></td>
+        <td><%= link_to '編集', edit_settlement_ledger_path(settlement_ledger) %></td>
+        <td><%= link_to '削除', settlement_ledger, method: :delete, data: { confirm: '削除してよろしいですか？' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to '新規作成', new_settlement_ledger_path %>

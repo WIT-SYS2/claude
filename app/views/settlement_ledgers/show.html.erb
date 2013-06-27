@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>台帳No:</strong>
+  <%= @settlement_ledger.ledger_number %>
+</p>
+
+<p>
+  <strong>内容:</strong>
+  <%= @settlement_ledger.content %>
+</p>
+
+<p>
+  <strong>備考:</strong>
+  <%= @settlement_ledger.note %>
+</p>
+
+<p>
+  <strong>精算金額:</strong>
+  <%= @settlement_ledger.price %>
+</p>
+
+<p>
+  <strong>申請日付:</strong>
+  <%= @settlement_ledger.application_date %>
+</p>
+
+<p>
+  <strong>申請者:</strong>
+  <%= @settlement_ledger.applicant_user_id %>
+</p>
+
+<p>
+  <strong>精算日付:</strong>
+  <%= @settlement_ledger.settlement_date %>
+</p>
+
+<p>
+  <strong>備考:</strong>
+  <%= @settlement_ledger.settlement_note %>
+</p>
+
+<p>
+  <strong>完了日時:</strong>
+  <%= @settlement_ledger.completed_at %>
+</p>
+
+<%= link_to '編集', edit_settlement_ledger_path(@settlement_ledger) %> |
+<%= link_to '戻る', settlement_ledgers_path %>
