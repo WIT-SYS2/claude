@@ -1,4 +1,5 @@
 class SettlementLedgersController < ApplicationController
+  before_filter :authenticate_user!
   before_action :set_settlement_ledger, only: [:edit, :update, :destroy]
 
   # GET /settlement_ledgers
@@ -20,6 +21,7 @@ class SettlementLedgersController < ApplicationController
   # POST /settlement_ledgers.json
   def create
     @settlement_ledger = SettlementLedger.new(settlement_ledger_params)
+    @settlement_ledger.applicant_user_id = current_user.id
 
     respond_to do |format|
       if @settlement_ledger.save
@@ -64,6 +66,6 @@ class SettlementLedgersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def settlement_ledger_params
-      params.require(:settlement_ledger).permit(:ledger_number, :content, :note, :price, :application_date, :applicant_user_id, :settlement_date, :settlement_note, :completed_at)
+      params.require(:settlement_ledger).permit(:content, :note, :price, :application_date)
     end
 end

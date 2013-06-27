@@ -34,6 +34,10 @@ class SettlementLedger < ActiveRecord::Base
 
   before_validation :assign_ledger_number, only: :create
 
+  def applicant
+    User.find(applicant_user_id)
+  end
+
   private
 
   def assign_ledger_number
