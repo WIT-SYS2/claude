@@ -1,20 +1,11 @@
-<%= simple_form_for @settlement_ledger do |f| %>
-  <% if @settlement_ledger.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@settlement_ledger.errors.count, "error") %> prohibited this settlement_ledger from being saved:</h2>
-
-      <ul>
-      <% @settlement_ledger.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <%= f.input :content, label: '内容' %>
-  <%= f.input :note, label: '備考' %>
-  <%= f.input :price, label: '金額' %>
-  <%= f.input :application_date, label: '申請日付' %>
-
-  <%= f.button :submit, value: '登録' %>
+<%= simple_form_for @settlement_ledger, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :content, label: '内容', required: false, hint: '「出張精算書」「営業経費精算書」など', input_html: { class: 'input-xlarge', maxlength: 40 } %>
+  <%= f.input :note, label: '備考', required: false, input_html: { class: 'input-xlarge', maxlength: 200 } %>
+  <%= f.input :price, label: '金額', input_html: { class: 'input-mini text-right' } %>
+  <%= f.input :application_date, label: '申請日付', as: :string, required: false, input_html: { class: 'input-medium datepicker', value: Date.today } %>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn-primary', confirm: '精算申請を登録します。よろしいですか？' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                settlement_ledgers_path, :class => 'btn' %>
+  </div>
 <% end %>

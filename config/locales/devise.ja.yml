@@ -98,3 +98,4 @@ ja:
 #        one: "1 error prohibited this %{resource} from being saved:"
         other: "%{count} つのエラーにより %{resource} は保存されませんでした:"
 #        other: "%{count} errors prohibited this %{resource} from being saved:"
+

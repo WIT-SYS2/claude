@@ -16,7 +16,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
+gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -28,9 +28,12 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 
 gem 'rails-i18n'
+gem 'i18n_generators'
 gem 'cancan'
 gem 'devise', github: 'plataformatec/devise', branch: 'rails4'
-gem 'simple_form'
+gem 'simple_form', github: 'plataformatec/simple_form'
+gem 'less-rails'
+gem 'twitter-bootstrap-rails'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

@@ -1,20 +1,11 @@
-<%= simple_form_for @user do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-      <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <%= f.input :name, label: '名前' %>
-  <%= f.input :email, label: 'メールアドレス' %>
-  <%= f.input :password, label: 'パスワード' %>
-  <%= f.input :password_confirmation, label: false %>
-
-  <%= f.button :submit, value: '登録' %>
+<%= simple_form_for @user, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :name, required: false, placeholder: '名前', input_html: { maxlength: 40 } %>
+  <%= f.input :email, placeholder: 'メールアドレス', input_html: { class: 'input-xlarge', maxlength: 255 } %>
+  <%= f.input :password, placeholder: 'パスワード', input_html: { maxlength: 40 } %>
+  <%= f.input :password_confirmation, label: false, placeholder: 'パスワード', input_html: { maximum: 40 } %>
+  <div class="form-actions">
+    <%= f.button :submit, :class => 'btn-primary', confirm: t('helpers.links.confirm', default: 'Are you sure?') %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                users_path, :class => 'btn' %>
+  </div>
 <% end %>

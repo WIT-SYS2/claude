@@ -1,0 +1,52 @@
+ja:
+  settlement_ledgers:
+    index:
+      title: 精算申請一覧
+    new:
+      title: 精算申請の新規作成
+    edit:
+      title: 精算申請の編集
+  users:
+    index:
+      title: ユーザー一覧
+    new:
+      title: ユーザーの新規登録
+    edit:
+      title: ユーザーの編集
+
+  activerecord:
+    models:
+      settlement_ledger: 精算台帳  #g
+      user: ユーザー  #g
+
+    attributes:
+      settlement_ledger:
+        ledger_number: 台帳No  #g
+        content: 内容  #g
+        note: 備考  #g
+        price: 精算金額  #g
+        application_date: 申請日付  #g
+        applicant_user_id: 申請者  #g
+        settlement_date: 精算日付  #g
+        settlement_note: 備考  #g
+        completed_at: 完了日付  #g
+        deleted_at: 削除日時  #g
+
+      user:
+        confirmation_sent_at: confirmation_sent_at  #g
+        confirmation_token: confirmation_token  #g
+        confirmed_at: confirmed_at  #g
+        current_sign_in_at: current_sign_in_at  #g
+        current_sign_in_ip: current_sign_in_ip  #g
+        deleted_at: deleted_at  #g
+        email: メールアドレス  #g
+        password: パスワード  #g
+        password_confirmation: パスワード（確認）  #g
+        current_password: 現在のパスワード  #g
+        encrypted_password: encrypted_password  #g
+        last_sign_in_at: last_sign_in_at  #g
+        last_sign_in_ip: last_sign_in_ip  #g
+        name: 名前  #g
+        remember_created_at: remember_created_at  #g
+        reset_password_sent_at: reset_password_sent_at  #g
+        reset_password_token: reset_password_token  #g

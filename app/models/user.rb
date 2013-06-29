@@ -23,9 +23,19 @@
 #
 
 class User < ActiveRecord::Base
+  validates :name, presence: true, length: { in: 1..20 }
+  validates :password, confirmation: true,
+                       length: { maximum: 40 }
+
+  default_scope { where('deleted_at IS NULL') }
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :confirmable,
+  devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  def deleted?
+    deleted_at.present?
+  end
 end
