@@ -1,6 +1,7 @@
 class SettlementLedgersController < ApplicationController
   before_filter :authenticate_user!
-  before_action :set_settlement_ledger, only: [:edit, :update, :destroy]
+  before_action :set_settlement_ledger,
+    only: [:edit, :update, :destroy, :edit_for_settle, :settle]
 
   # GET /settlement_ledgers
   # GET /settlement_ledgers.json
@@ -58,6 +59,26 @@ class SettlementLedgersController < ApplicationController
     end
   end
 
+  def edit_for_settle
+  end
+
+  def settle
+    if params[:settlement_ledger][:completed] == "1"
+      params[:settlement_ledger][:completed_at] = DateTime.now
+    else
+      params[:settlement_ledger][:completed_at] = nil
+    end
+    respond_to do |format|
+      if @settlement_ledger.update(settlement_ledger_params)
+        format.html { redirect_to settlement_ledgers_url, notice: '精算依頼を更新しました。' }
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @settlement_ledger.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_settlement_ledger
@@ -66,6 +87,6 @@ class SettlementLedgersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def settlement_ledger_params
-      params.require(:settlement_ledger).permit(:content, :note, :price, :application_date)
+      params.require(:settlement_ledger).permit(:content, :note, :price, :application_date, :settlement_date, :settlement_note, :completed_at)
     end
 end

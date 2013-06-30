@@ -5,7 +5,12 @@ Claude::Application.routes.draw do
     put 'users' => 'devise/registrations#update', :as => 'user_registration'
   end
   resources :users, except: [:show]
-  resources :settlement_ledgers, except: [:show]
+  resources :settlement_ledgers, except: [:show] do
+    member do
+      get :edit_for_settle
+      put :settle
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

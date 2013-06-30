@@ -18,6 +18,7 @@
 #
 
 class SettlementLedger < ActiveRecord::Base
+  attr_accessor :completed
   validates :ledger_number, length: { is: 9 },
                             uniqueness: true
   validates :content, presence: true, length: { maximum: 40 }
@@ -35,7 +36,11 @@ class SettlementLedger < ActiveRecord::Base
   before_validation :assign_ledger_number, only: :create
 
   def applicant
-    User.find(applicant_user_id)
+    User.unscoped.find(applicant_user_id)
+  end
+
+  def completed?
+    completed_at.present?
   end
 
   private
