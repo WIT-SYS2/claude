@@ -47,6 +47,7 @@ ja:
         last_sign_in_at: last_sign_in_at  #g
         last_sign_in_ip: last_sign_in_ip  #g
         name: 名前  #g
+        roles: 権限  #g
         remember_created_at: remember_created_at  #g
         reset_password_sent_at: reset_password_sent_at  #g
         reset_password_token: reset_password_token  #g

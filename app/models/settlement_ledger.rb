@@ -28,12 +28,12 @@ class SettlementLedger < ActiveRecord::Base
   validates :applicant_user_id, presence: true
   validates :settlement_note, length: { maximum: 40 }
 
-  default_scope where('deleted_at IS NULL').order('ledger_number ASC')
+  default_scope { order('ledger_number ASC') }
 
   scope :completed, -> { where('completed_at IS NOT NULL') }
   scope :not_completed, -> { where('completed_at IS NULL') }
 
-  before_validation :assign_ledger_number, only: :create
+  before_validation :assign_ledger_number, on: :create
 
   def applicant
     User.unscoped.find(applicant_user_id)
@@ -43,12 +43,15 @@ class SettlementLedger < ActiveRecord::Base
     completed_at.present?
   end
 
+  def deleted?
+    deleted_at.present?
+  end
+
   private
 
   def assign_ledger_number
-    latest = SettlementLedger.unscoped
-                             .where('ledger_number LIKE ?', "#{Rails.configuration.ledger_number_prefix}%")
-                             .order('ledger_number ASC')
+    latest = SettlementLedger.where('ledger_number LIKE ?', "#{Rails.configuration.ledger_number_prefix}%")
+                             .order('ledger_number DESC')
                              .first
     if latest
       self.ledger_number = latest.ledger_number.succ

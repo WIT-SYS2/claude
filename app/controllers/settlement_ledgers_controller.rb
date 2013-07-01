@@ -2,6 +2,7 @@ class SettlementLedgersController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_settlement_ledger,
     only: [:edit, :update, :destroy, :edit_for_settle, :settle]
+  authorize_resource
 
   # GET /settlement_ledgers
   # GET /settlement_ledgers.json
@@ -63,7 +64,7 @@ class SettlementLedgersController < ApplicationController
   end
 
   def settle
-    if params[:settlement_ledger][:completed] == "1"
+    if params[:settlement_ledger].delete(:completed) == "1"
       params[:settlement_ledger][:completed_at] = DateTime.now
     else
       params[:settlement_ledger][:completed_at] = nil

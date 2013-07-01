@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_user, only: [:edit, :update, :destroy]
+  authorize_resource
 
   def index
     @users = User.unscoped.order('deleted_at ASC, id ASC')
@@ -18,7 +19,6 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        #@user.send_confirmation_instructions
         format.html { redirect_to users_url, notice: 'ユーザを登録しました。' }
         format.json { render action: 'index', status: :created, location: @user }
       else
@@ -67,6 +67,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, role_ids: [])
   end
 end

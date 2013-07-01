@@ -3,8 +3,9 @@
   <%= f.input :email, placeholder: 'メールアドレス', input_html: { class: 'input-xlarge', maxlength: 255 } %>
   <%= f.input :password, placeholder: 'パスワード', input_html: { maxlength: 40 } %>
   <%= f.input :password_confirmation, label: false, placeholder: 'パスワード', input_html: { maximum: 40 } %>
+  <%= f.association :roles, as: :check_boxes, disabled: @user == current_user %>
   <div class="form-actions">
-    <%= f.button :submit, :class => 'btn-primary', confirm: t('helpers.links.confirm', default: 'Are you sure?') %>
+    <%= f.button :submit, :class => 'btn-primary', data: { confirm: t('helpers.links.confirm', default: 'Are you sure?') } %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 users_path, :class => 'btn' %>
   </div>

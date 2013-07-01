@@ -4,7 +4,7 @@
   <%= f.input :price, label: '金額', input_html: { class: 'input-mini text-right' } %>
   <%= f.input :application_date, label: '申請日付', as: :string, required: false, input_html: { class: 'input-medium datepicker', value: Date.today } %>
   <div class="form-actions">
-    <%= f.button :submit, :class => 'btn-primary', confirm: '精算申請を登録します。よろしいですか？' %>
+    <%= f.button :submit, :class => 'btn-primary', data: { confirm: '精算申請を登録します。よろしいですか？' } %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 settlement_ledgers_path, :class => 'btn' %>
   </div>

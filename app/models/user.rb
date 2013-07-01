@@ -17,6 +17,7 @@
 #  confirmation_token     :string(255)
 #  confirmed_at           :datetime
 #  confirmation_sent_at   :datetime
+#  unconfirmed_email      :string(255)
 #  deleted_at             :datetime
 #  created_at             :datetime
 #  updated_at             :datetime
@@ -26,6 +27,8 @@ class User < ActiveRecord::Base
   validates :name, presence: true, length: { in: 1..20 }
   validates :password, confirmation: true,
                        length: { maximum: 40 }
+
+  has_and_belongs_to_many :roles
 
   default_scope { where('deleted_at IS NULL') }
 
@@ -37,5 +40,9 @@ class User < ActiveRecord::Base
 
   def deleted?
     deleted_at.present?
+  end
+
+  def has_role?(role_key)
+    roles.any? { |r| r.key.underscore.to_sym == role_key }
   end
 end
