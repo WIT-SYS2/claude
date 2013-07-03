@@ -11,7 +11,7 @@ GIT
 
 GIT
   remote: git://github.com/plataformatec/simple_form.git
-  revision: 9b2018052e9a7706fd4b2e28cca0d04560c0f1ec
+  revision: dcf4862972792abafeefd73f6b1d385322a64115
   specs:
     simple_form (3.0.0.rc)
       actionpack (>= 4.0.0, < 4.1)
@@ -47,10 +47,11 @@ GEM
     annotate (2.5.0)
       rake
     arel (4.0.0)
-    atomic (1.1.9)
+    atomic (1.1.10)
     bcrypt-ruby (3.0.1)
     builder (3.1.4)
     cancan (1.6.10)
+    coderay (1.0.9)
     coffee-rails (4.0.0)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0.beta, < 5.0)
@@ -59,11 +60,32 @@ GEM
       execjs
     coffee-script-source (1.6.2)
     commonjs (0.2.6)
+    database_cleaner (1.0.1)
+    diff-lcs (1.2.4)
     domain_name (0.5.12)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    factory_girl (4.2.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.2.1)
+      factory_girl (~> 4.2.0)
+      railties (>= 3.0.0)
+    ffi (1.9.0)
+    formatador (0.2.4)
+    guard (1.8.1)
+      formatador (>= 0.2.4)
+      listen (>= 1.0.0)
+      lumberjack (>= 1.0.2)
+      pry (>= 0.9.10)
+      thor (>= 0.14.6)
+    guard-bundler (1.0.0)
+      bundler (~> 1.0)
+      guard (~> 1.1)
+    guard-rspec (3.0.2)
+      guard (>= 1.8)
+      rspec (~> 2.13)
     hike (1.2.3)
     http-cookie (1.0.1)
       domain_name (~> 0.5)
@@ -85,6 +107,11 @@ GEM
       actionpack (>= 3.1)
       less (~> 2.3.1)
     libv8 (3.11.8.17)
+    listen (1.2.2)
+      rb-fsevent (>= 0.9.3)
+      rb-inotify (>= 0.9)
+      rb-kqueue (>= 0.2)
+    lumberjack (1.0.4)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -97,6 +124,7 @@ GEM
       nokogiri (~> 1.4)
       ntlm-http (~> 0.1, >= 0.1.1)
       webrobots (>= 0.0.9, < 0.2)
+    method_source (0.8.1)
     mime-types (1.23)
     mini_portile (0.5.0)
     minitest (4.7.5)
@@ -110,6 +138,10 @@ GEM
     orm_adapter (0.4.0)
     pg (0.15.1)
     polyglot (0.3.3)
+    pry (0.9.12.2)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -130,9 +162,29 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.11.0)
     rake (10.1.0)
+    rb-fsevent (0.9.3)
+    rb-inotify (0.9.0)
+      ffi (>= 0.5.0)
+    rb-kqueue (0.2.0)
+      ffi (>= 0.5.0)
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
+    rspec (2.13.0)
+      rspec-core (~> 2.13.0)
+      rspec-expectations (~> 2.13.0)
+      rspec-mocks (~> 2.13.0)
+    rspec-core (2.13.1)
+    rspec-expectations (2.13.0)
+      diff-lcs (>= 1.1.3, < 2.0)
+    rspec-mocks (2.13.1)
+    rspec-rails (2.13.2)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (~> 2.13.0)
+      rspec-expectations (~> 2.13.0)
+      rspec-mocks (~> 2.13.0)
     sass (3.2.9)
     sass-rails (4.0.0)
       railties (>= 4.0.0.beta, < 5.0)
@@ -141,6 +193,8 @@ GEM
     sdoc (0.3.20)
       json (>= 1.1.3)
       rdoc (~> 3.10)
+    slop (3.4.5)
+    spring (0.0.10)
     sprockets (2.10.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -150,6 +204,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    terminal-notifier-guard (1.5.3)
     therubyracer (0.11.4)
       libv8 (~> 3.11.8.12)
       ref
@@ -189,7 +244,12 @@ DEPENDENCIES
   annotate
   cancan
   coffee-rails (~> 4.0.0)
+  database_cleaner
   devise!
+  factory_girl_rails
+  guard
+  guard-bundler
+  guard-rspec
   i18n_generators
   jbuilder (~> 1.2)
   jquery-rails
@@ -198,9 +258,13 @@ DEPENDENCIES
   pg
   rails (= 4.0.0)
   rails-i18n
+  rb-fsevent
+  rspec-rails
   sass-rails (~> 4.0.0)
   sdoc
   simple_form!
+  spring
+  terminal-notifier-guard
   therubyracer
   turbolinks
   twitter-bootstrap-rails

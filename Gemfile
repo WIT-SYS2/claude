@@ -58,6 +58,18 @@ gem 'unicorn'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+group :development, :test do
+  gem 'spring'
+  gem 'rb-fsevent'
+  gem 'terminal-notifier-guard'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
+  gem 'guard'
+  gem 'guard-rspec'
+  gem 'guard-bundler'
+end
+
 group :development do
   gem 'annotate'
 end

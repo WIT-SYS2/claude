@@ -5,5 +5,7 @@ class CreateRoles < ActiveRecord::Migration
       t.string :key, limit: 20, null: false
       t.integer :sort, null: false
     end
+
+    add_index(:roles, :key, unique: true)
   end
 end
