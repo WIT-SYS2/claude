@@ -34,15 +34,23 @@
     <!-- Size should be 32 x 32 pixels -->
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
   </head>
-  <body>
+  <body class="<%= controller.class.to_s.underscore.gsub('/', '_').sub(/_controller$/, '') %>">
 
     <%= nav_bar static: :top, brand: 'Claude', responsive: true do %>
-      <%= menu_group pull: :right do %>
+      <%= menu_group do %>
         <% if user_signed_in? %>
           <% if can? :manage, User %>
             <%= menu_item 'ユーザー管理', users_url %>
           <% end %>
-          <%= menu_item 'プロフィール変更', edit_user_registration_url %>
+        <% end %>
+      <% end %>
+      <%= menu_group pull: :right do %>
+        <% if user_signed_in? %>
+          <li>
+            <%= link_to edit_user_registration_url do %>
+              <i class="icon-user"></i><%= current_user.name %>
+            <% end %>
+          </li>
           <%= menu_item 'ログアウト', destroy_user_session_url, method: :delete %>
         <% end %>
       <% end %>
