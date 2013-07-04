@@ -18,6 +18,8 @@
 #
 
 class SettlementLedger < ActiveRecord::Base
+  EXCEL_HEADER = %w[台帳No 内容 備考 精算金額 申請日 申請者 精算日 備考 精算完了 削除]
+
   attr_accessor :completed
   validates :ledger_number, length: { is: 9 },
                             uniqueness: true
@@ -45,6 +47,21 @@ class SettlementLedger < ActiveRecord::Base
 
   def deleted?
     deleted_at.present?
+  end
+
+  def to_xlsx_value
+    [
+      ledger_number,
+      content,
+      note,
+      price,
+      application_date,
+      applicant.name,
+      settlement_date,
+      settlement_note,
+      completed? ? '○' : '×',
+      deleted? ? '○' : '×'
+    ]
   end
 
   private

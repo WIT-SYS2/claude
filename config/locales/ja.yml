@@ -136,6 +136,7 @@ ja:
       cancel: キャンセル
       destroy: 削 除
       disable: 無効化
+      download: ダウンロード
       confirm: よろしいですか？
     select:
       prompt: 選択してください。

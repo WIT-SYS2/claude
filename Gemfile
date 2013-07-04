@@ -42,6 +42,7 @@ gem 'less-rails'
 gem 'twitter-bootstrap-rails'
 gem 'active_decorator'
 gem 'kaminari'
+gem 'axlsx'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

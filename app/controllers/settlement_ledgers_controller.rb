@@ -62,6 +62,21 @@ class SettlementLedgersController < ApplicationController
     end
   end
 
+  def download
+    pkg = Axlsx::Package.new
+    pkg.workbook do |wb|
+      wb.add_worksheet(name: '精算書一覧') do |ws|
+        ws.add_row SettlementLedger::EXCEL_HEADER
+        SettlementLedger.all.each do |sl|
+          ws.add_row sl.to_xlsx_value
+        end
+      end
+    end
+    send_data(pkg.to_stream.read,
+              filename: '精算書一覧.xlsx',
+              type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+  end
+
   def edit_for_settle
   end
 
