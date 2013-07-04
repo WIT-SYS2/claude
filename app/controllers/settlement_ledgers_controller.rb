@@ -9,7 +9,14 @@ class SettlementLedgersController < ApplicationController
   def index
     params[:page] ||= 1
     @settlement_ledgers = SettlementLedger.unscoped
+    unless params[:target] == "all"
+      @settlement_ledgers = @settlement_ledgers.not_completed.not_deleted
+    end
     @settlement_ledgers = @settlement_ledgers.page(params[:page])
+    respond_to do |format|
+      format.html
+      format.js if request.xhr?
+    end
   end
 
   # GET /settlement_ledgers/new

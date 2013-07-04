@@ -34,6 +34,8 @@ class SettlementLedger < ActiveRecord::Base
 
   scope :completed, -> { where('completed_at IS NOT NULL') }
   scope :not_completed, -> { where('completed_at IS NULL') }
+  scope :deleted, -> { where('deleted_at IS NOT NULL') }
+  scope :not_deleted, -> { where('deleted_at IS NULL') }
 
   before_validation :assign_ledger_number, on: :create
 
