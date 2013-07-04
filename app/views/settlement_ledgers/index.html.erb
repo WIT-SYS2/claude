@@ -2,6 +2,7 @@
 <div class="page-header">
   <h3><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h3>
 </div>
+<%= paginate @settlement_ledgers %>
 <table class="table table-hover">
   <thead>
     <tr>

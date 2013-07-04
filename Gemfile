@@ -41,6 +41,7 @@ gem 'simple_form', github: 'plataformatec/simple_form'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'
 gem 'active_decorator'
+gem 'kaminari'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

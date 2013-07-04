@@ -7,7 +7,9 @@ class SettlementLedgersController < ApplicationController
   # GET /settlement_ledgers
   # GET /settlement_ledgers.json
   def index
-    @settlement_ledgers = SettlementLedger.all
+    params[:page] ||= 1
+    @settlement_ledgers = SettlementLedger.unscoped
+    @settlement_ledgers = @settlement_ledgers.page(params[:page])
   end
 
   # GET /settlement_ledgers/new
