@@ -26,8 +26,8 @@ module Claude
     config.i18n.default_locale = :ja
 
     config.assets.initializer_on_precompile = false
-    config.action_mailer.default_url_options = { host: 'localhost:3000' }
+    config.action_mailer.default_url_options = { host: ENV['HOST'], port: ENV['PORT'] }
 
-    config.ledger_number_prefix = 'TBT-23'
+    config.ledger_number_prefix = ENV['LEDGER_NUMBER_PREFIX']
   end
 end
