@@ -8,6 +8,5 @@
 
 LEDGER_NUMBER_PREFIX: TBT-22
 HOST: localhost
-PORT: 3000
 GMAIL_USER_NAME: gmail_user_name
 GMAIL_PASSWORD: gmail_password
