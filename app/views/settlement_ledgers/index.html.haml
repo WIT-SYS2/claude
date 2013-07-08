@@ -1,0 +1,19 @@
+- model_class = SettlementLedger
+.page-header
+  %h3= t '.title', :default => model_class.model_name.human.pluralize.titleize
+
+%ul{class: 'nav nav-tabs', id: 'conditionTab'}
+  %li
+    %a{href: '#not-completed', 'data-toggle' => 'tab'} 未完了
+  %li
+    %a{href: '#all', 'data-toggle' => 'tab'} すべて
+
+#settlement-ledger-list
+  = render partial: 'settlement_ledger_list'
+
+= link_to t('.new', :default => t("helpers.links.new")),
+            new_settlement_ledger_path,
+            :class => 'btn btn-primary'
+= link_to t('.download', :default => t("helpers.links.download")),
+            download_settlement_ledgers_path,
+            :class => 'btn btn-primary'

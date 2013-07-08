@@ -1,0 +1,13 @@
+%h3 確認メールの再送信
+
+= simple_form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post, class: 'form-horizontal' }) do |f|
+  = f.error_notification
+  = f.full_error :confirmation_token
+
+  .form-inputs
+    = f.input :email, required: false, autofocus: false, placeholder: 'メールアドレス', input_html: { class: 'input-xlarge', maxlength: 200 }
+
+  .form-actions
+    = f.button :submit, '確認メールを再送信する'
+
+= render "devise/shared/links"

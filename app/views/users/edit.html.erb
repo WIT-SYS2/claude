@@ -1,5 +1,0 @@
-<%- model_class = User -%>
-<div class="page-header">
-  <h3><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize %> <%= image_tag @user.avatar_url %></h3>
-</div>
-<%= render :partial => 'form' %>

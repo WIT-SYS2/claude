@@ -1,0 +1,6 @@
+%p ようこそ #{ @email} さん
+
+%p 以下のリンクをクリックすると、あなたのアカウントが本登録されます。
+
+%p
+  = link_to 'アカウントを確認', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token)
