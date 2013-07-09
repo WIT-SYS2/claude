@@ -1,3 +1,6 @@
 language: ruby
 rvm:
   - 2.0.0
+before_script:
+  - cp config/database.travisci.yml config/database.yml
+  -
