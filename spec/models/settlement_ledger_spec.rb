@@ -2,19 +2,20 @@
 #
 # Table name: settlement_ledgers
 #
-#  id                :integer          not null, primary key
-#  ledger_number     :string(9)        not null
-#  content           :string(40)       not null
-#  note              :string(200)      not null
-#  price             :integer          not null
-#  application_date  :date             not null
-#  applicant_user_id :integer          not null
-#  settlement_date   :date
-#  settlement_note   :string(40)
-#  completed_at      :datetime
-#  deleted_at        :datetime
-#  created_at        :datetime
-#  updated_at        :datetime
+#  id                  :integer          not null, primary key
+#  ledger_number       :string(9)        not null
+#  content             :string(40)       not null
+#  note                :string(200)      not null
+#  price               :integer          not null
+#  application_date    :date             not null
+#  applicant_user_id   :integer          not null
+#  applicant_user_name :string(40)       not null
+#  settlement_date     :date
+#  settlement_note     :string(40)
+#  completed_at        :datetime
+#  deleted_at          :datetime
+#  created_at          :datetime
+#  updated_at          :datetime
 #
 
 require 'spec_helper'
@@ -177,22 +178,6 @@ describe SettlementLedger do
     end
   end
 
-  describe '#applicant' do
-    subject { ledger.applicant }
-    let(:user) { FactoryGirl.create(:user, deleted_at: deleted_at) }
-    let(:ledger) { FactoryGirl.create(:settlement_ledger, applicant_user_id: user.id) }
-
-    context 'ユーザが存在する場合' do
-      let(:deleted_at) { nil }
-      it { should == user }
-    end
-
-    context '削除済ユーザの場合' do
-      let(:deleted_at) { DateTime.now }
-      it { should == user }
-    end
-  end
-
   describe '#completed?' do
     subject { ledger.completed? }
     let(:ledger) { FactoryGirl.build(:settlement_ledger, completed_at: completed_at) }
@@ -220,6 +205,76 @@ describe SettlementLedger do
     context '削除日が設定されていない場合' do
       let(:deleted_at) { nil }
       it { should be_false }
+    end
+  end
+
+  describe '#to_xlsx_value' do
+    let(:ledger) { FactoryGirl.build(:settlement_ledger, applicant_user_id: FactoryGirl.create(:user).id) }
+
+    subject { ledger.to_xlsx_value }
+
+    its(:size) { should == 10 }
+
+    describe '台帳No' do
+      before { ledger.ledger_number = '123456789' }
+      its([0]) { should == '123456789' }
+    end
+
+    describe '内容' do
+      before { ledger.content = '営業経費精算書' }
+      its([1]) { should == '営業経費精算書' }
+    end
+
+    describe '備考' do
+      before { ledger.note = '５月分' }
+      its([2]) { should == '５月分' }
+    end
+
+    describe '精算金額' do
+      before { ledger.price = 12345 }
+      its([3]) { should == 12345 }
+    end
+
+    describe '申請日' do
+      before { ledger.application_date = Date.today }
+      its([4]) { should == Date.today }
+    end
+
+    describe '申請者' do
+      before { ledger.applicant_user_name = '利用者１' }
+      its([5]) { should == '利用者１' }
+    end
+
+    describe '精算日' do
+      before { ledger.settlement_date = Date.today }
+      its([6]) { should == Date.today }
+    end
+
+    describe '精算備考' do
+      before { ledger.settlement_note = '精算しました' }
+      its([7]) { should == '精算しました' }
+    end
+
+    describe '精算完了' do
+      context '完了している場合' do
+        before { ledger.completed_at = DateTime.now }
+        its([8]) { should == '○' }
+      end
+      context '未完了の場合' do
+        before { ledger.completed_at = nil }
+        its([8]) { should == '×' }
+      end
+    end
+
+    describe '削除済み' do
+      context '削除されている場合' do
+        before { ledger.deleted_at = DateTime.now }
+        its([9]) { subject; should == '○' }
+      end
+      context '削除されていない場合' do
+        before { ledger.deleted_at = nil }
+        its([9]) { should == '×' }
+      end
     end
   end
 

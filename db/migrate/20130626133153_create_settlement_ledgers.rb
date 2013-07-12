@@ -7,6 +7,7 @@ class CreateSettlementLedgers < ActiveRecord::Migration
       t.integer :price, null: false
       t.date :application_date, null: false
       t.integer :applicant_user_id, null: false
+      t.string :applicant_user_name, limit: 40, null: false
       t.date :settlement_date
       t.string :settlement_note, limit: 40
       t.datetime :completed_at

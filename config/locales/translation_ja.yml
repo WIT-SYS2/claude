@@ -27,6 +27,7 @@ ja:
         price: 精算金額  #g
         application_date: 申請日付  #g
         applicant_user_id: 申請者  #g
+        applicant_user_name: 申請者  #g
         settlement_date: 精算日付  #g
         settlement_note: 備考  #g
         completed_at: 完了日付  #g
