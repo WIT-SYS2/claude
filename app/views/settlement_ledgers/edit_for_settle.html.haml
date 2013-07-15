@@ -7,6 +7,6 @@
 
   = f.input :completed, label: false, as: :boolean, inline_label: '精算完了'
   .form-actions
-    = f.button :submit, value: '登録する', :class => 'btn-primary', confirm: 'よろしいですか？'
+    = f.button :submit, value: '登録する', :class => 'btn-primary', data: { confirm: 'よろしいですか？' }
     = link_to t('.cancel', :default => t("helpers.links.cancel")),
                 settlement_ledgers_path, :class => 'btn'
