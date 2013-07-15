@@ -1,8 +1,6 @@
 # Database setting for Travis CI
 test:
-  adapter: mysql2
-  encoding: utf8
+  adapter: postgresql
   database: claude_test
-  username:
-  host: 127.0.0.1
+  username: postgres
 
