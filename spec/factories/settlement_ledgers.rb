@@ -8,5 +8,6 @@ FactoryGirl.define do
     price 20000
     application_date Date.today
     applicant_user_id 1
+    applicant_user_name '申請者'
   end
 end
