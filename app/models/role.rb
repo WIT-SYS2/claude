@@ -16,7 +16,7 @@ class Role < ActiveRecord::Base
                   uniqueness: true
   validates :sort, presence: true
 
-  has_and_belongs_to_many :uses
+  has_and_belongs_to_many :users
 
   default_scope { order('sort') }
 end
