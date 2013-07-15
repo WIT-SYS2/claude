@@ -55,8 +55,13 @@ Ruby 2.x + Rails 4.x + SQLite3 という環境での実行を前提としてい�
 
 ## Test
 
+全てのテストを実行する場合は以下のコマンドを実行します。
+
     bundle exec rake
 
+Guardを利用したテストの自動実行を開始する場合は以下のコマンドを実行します。
+
+    bundle exec guard
 
 ## Feature Requests & Bugs
 <http://github.com/shizm/claude/issues>
