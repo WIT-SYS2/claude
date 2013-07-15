@@ -3,7 +3,7 @@
 # Table name: users
 #
 #  id                     :integer          not null, primary key
-#  name                   :string(40)       not null
+#  name                   :string(40)       default(""), not null
 #  email                  :string(255)      default(""), not null
 #  encrypted_password     :string(255)      default(""), not null
 #  reset_password_token   :string(255)
@@ -102,22 +102,28 @@ describe User, '.new' do
   end
 
   describe '#has_role?' do
+    before(:all) do
+      FactoryGirl.create(:admin_role)
+      FactoryGirl.create(:accountant_role)
+    end
+
+    let(:user) { FactoryGirl.create(:user) }
+
     describe ':admin' do
       subject { user.has_role?(:admin) }
 
       context 'システム管理者の場合' do
-        let(:user) { FactoryGirl.create(:admin) }
+        before { user.roles << Role.find_by(key: 'admin') }
         it { should be_true }
       end
 
       context '経理担当者の場合' do
-        let(:user) { FactoryGirl.create(:accountant) }
+        before { user.roles << Role.find_by(key: 'accountant') }
         it { should be_false }
       end
 
       context '通常ユーザの場合' do
-        let(:user) { FactoryGirl.create(:user) }
-        it { should be_false }
+        it { user.has_role?(:admin).should be_false }
       end
     end
 
@@ -125,17 +131,16 @@ describe User, '.new' do
       subject { user.has_role?(:accountant) }
 
       context 'システム管理者の場合' do
-        let(:user) { FactoryGirl.create(:admin) }
+        before { user.roles << Role.find_by(key: 'admin') }
         it { should be_false }
       end
 
       context '経理担当者の場合' do
-        let(:user) { FactoryGirl.create(:accountant) }
+        before { user.roles << Role.find_by(key: 'accountant') }
         it { should be_true }
       end
 
       context '通常ユーザの場合' do
-        let(:user) { FactoryGirl.create(:user) }
         it { should be_false }
       end
     end
