@@ -7,9 +7,9 @@ FactoryGirl.define do
     sort 1
   end
   
-  factory :accountant_role, class: Role do
-    name '経理担当者'
-    key 'accountant'
+  factory :treasurer_role, class: Role do
+    name '出納担当者'
+    key 'treasurer'
     sort 2
   end
 end

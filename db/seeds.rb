@@ -12,11 +12,11 @@ ActiveRecord::Base.transaction do
                        password: 'administrator',
                        confirmed_at: DateTime.now,
                        confirmation_sent_at: DateTime.now)
-  accountant = User.create!(name: '経理担当者',
-                            email: 'accountant@example.com',
-                            password: 'accountant',
-                            confirmed_at: DateTime.now,
-                            confirmation_sent_at: DateTime.now)
+  treasurer = User.create!(name: '出納担当者',
+                           email: 'treasurer@example.com',
+                           password: 'treasurer',
+                           confirmed_at: DateTime.now,
+                           confirmation_sent_at: DateTime.now)
   user1 = User.create!(name: '利用者1',
                        email: 'user1@example.com',
                        password: 'applicationuser',
@@ -29,11 +29,11 @@ ActiveRecord::Base.transaction do
                        confirmation_sent_at: DateTime.now)
 
   admin_role = Role.create!(name: 'システム管理者', key: 'admin', sort: 1)
-  accountant_role = Role.create!(name: '経理担当者', key: 'accountant', sort: 2)
+  treasurer_role = Role.create!(name: '出納担当者', key: 'treasurer', sort: 2)
 
-  admin.roles << [admin_role, accountant_role]
+  admin.roles << [admin_role, treasurer_role]
   admin.save!
 
-  accountant.roles << [accountant_role]
-  accountant.save!
+  treasurer.roles << [treasurer_role]
+  treasurer.save!
 end
