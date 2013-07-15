@@ -104,7 +104,7 @@ describe User, '.new' do
   describe '#has_role?' do
     before(:all) do
       FactoryGirl.create(:admin_role)
-      FactoryGirl.create(:accountant_role)
+      FactoryGirl.create(:treasurer_role)
     end
 
     let(:user) { FactoryGirl.create(:user) }
@@ -118,7 +118,7 @@ describe User, '.new' do
       end
 
       context '経理担当者の場合' do
-        before { user.roles << Role.find_by(key: 'accountant') }
+        before { user.roles << Role.find_by(key: 'treasurer') }
         it { should be_false }
       end
 
@@ -127,8 +127,8 @@ describe User, '.new' do
       end
     end
 
-    describe ':accountant' do
-      subject { user.has_role?(:accountant) }
+    describe ':treasurer' do
+      subject { user.has_role?(:treasurer) }
 
       context 'システム管理者の場合' do
         before { user.roles << Role.find_by(key: 'admin') }
@@ -136,7 +136,7 @@ describe User, '.new' do
       end
 
       context '経理担当者の場合' do
-        before { user.roles << Role.find_by(key: 'accountant') }
+        before { user.roles << Role.find_by(key: 'treasurer') }
         it { should be_true }
       end
 

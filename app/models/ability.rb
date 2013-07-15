@@ -6,7 +6,7 @@ class Ability
 
     can :manage, User if user.has_role? :admin
     can [:read, :create], SettlementLedger
-    can :manage, SettlementLedger if user.has_role? :accountant
+    can :manage, SettlementLedger if user.has_role? :treasurer
     can [:update, :destroy], SettlementLedger, applicant_user_id: user.id
 
     # Define abilities for the passed in user here. For example:

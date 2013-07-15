@@ -19,11 +19,11 @@ FactoryGirl.define do
     confirmation_sent_at DateTime.now
   end
 
-  factory :accountant, class: User do
-    name '経理担当者'
-    sequence(:email) {|n| "accountant#{n}@example.com" }
-    password 'accountant'
-    password_confirmation 'accountant'
+  factory :treasurer, class: User do
+    name '出納担当者'
+    sequence(:email) {|n| "treasurer#{n}@example.com" }
+    password 'treasurer'
+    password_confirmation 'treasurer'
     confirmed_at DateTime.now
     confirmation_sent_at DateTime.now
   end
