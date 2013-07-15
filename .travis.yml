@@ -10,4 +10,5 @@ script:
   - bundle exec rspec
 before_script:
   - cp config/database.travisci.yml config/database.yml
+  - cp config/application.example.yml config/application.yml
   - psql -c 'create database claude_test' -U postgres
