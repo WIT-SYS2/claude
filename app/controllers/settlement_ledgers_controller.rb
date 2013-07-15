@@ -33,6 +33,7 @@ class SettlementLedgersController < ApplicationController
   def create
     @settlement_ledger = SettlementLedger.new(settlement_ledger_params)
     @settlement_ledger.applicant_user_id = current_user.id
+    @settlement_ledger.applicant_user_name = current_user.name
 
     respond_to do |format|
       if @settlement_ledger.save

@@ -2,25 +2,29 @@
 #
 # Table name: settlement_ledgers
 #
-#  id                :integer          not null, primary key
-#  ledger_number     :string(9)        not null
-#  content           :string(40)       not null
-#  note              :string(200)      not null
-#  price             :integer          not null
-#  application_date  :date             not null
-#  applicant_user_id :integer          not null
-#  settlement_date   :date
-#  settlement_note   :string(40)
-#  completed_at      :datetime
-#  deleted_at        :datetime
-#  created_at        :datetime
-#  updated_at        :datetime
+#  id                  :integer          not null, primary key
+#  ledger_number       :string(9)        not null
+#  content             :string(40)       not null
+#  note                :string(200)      not null
+#  price               :integer          not null
+#  application_date    :date             not null
+#  applicant_user_id   :integer          not null
+#  applicant_user_name :string(40)       not null
+#  settlement_date     :date
+#  settlement_note     :string(40)
+#  completed_at        :datetime
+#  deleted_at          :datetime
+#  created_at          :datetime
+#  updated_at          :datetime
 #
 
 class SettlementLedger < ActiveRecord::Base
   EXCEL_HEADER = %w[台帳No 内容 備考 精算金額 申請日 申請者 精算日 備考 精算完了 削除]
 
   attr_accessor :completed
+
+  belongs_to :applicant, foreign_key: 'applicant_user_id', class_name: 'User'
+
   validates :ledger_number, length: { is: 9 },
                             uniqueness: true
   validates :content, presence: true, length: { maximum: 40 }
@@ -28,6 +32,7 @@ class SettlementLedger < ActiveRecord::Base
   validates :price, numericality: { only_integer: true, greater_than: 0, less_than: 1000000 }
   validates :application_date, presence: true
   validates :applicant_user_id, presence: true
+  validates :applicant_user_name, presence: true, length: { maximum: 40 }
   validates :settlement_note, length: { maximum: 40 }
 
   default_scope { order('ledger_number ASC') }
@@ -38,10 +43,6 @@ class SettlementLedger < ActiveRecord::Base
   scope :not_deleted, -> { where('deleted_at IS NULL') }
 
   before_validation :assign_ledger_number, on: :create
-
-  def applicant
-    User.unscoped.find(applicant_user_id)
-  end
 
   def completed?
     completed_at.present?
@@ -58,7 +59,7 @@ class SettlementLedger < ActiveRecord::Base
       note,
       price,
       application_date,
-      applicant.name,
+      applicant_user_name,
       settlement_date,
       settlement_note,
       completed? ? '○' : '×',
