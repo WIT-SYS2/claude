@@ -25,8 +25,7 @@
 
 require 'spec_helper'
 
-describe User, '.new' do
-
+describe User do
   describe '.new' do
     let(:user) { FactoryGirl.build(:user) }
     subject { user }
@@ -102,10 +101,13 @@ describe User, '.new' do
   end
 
   describe '#has_role?' do
-    before(:all) do
+    before do
       FactoryGirl.create(:admin_role)
       FactoryGirl.create(:treasurer_role)
     end
+
+    let(:admin_role) { Role.find_by(key: 'admin') }
+    let(:treasurer_role) { Role.find_by(key: 'treasurer') }
 
     let(:user) { FactoryGirl.create(:user) }
 
@@ -113,12 +115,12 @@ describe User, '.new' do
       subject { user.has_role?(:admin) }
 
       context 'システム管理者の場合' do
-        before { user.roles << Role.find_by(key: 'admin') }
+        before { user.roles << admin_role }
         it { should be_true }
       end
 
       context '経理担当者の場合' do
-        before { user.roles << Role.find_by(key: 'treasurer') }
+        before { user.roles << treasurer_role }
         it { should be_false }
       end
 
@@ -131,12 +133,12 @@ describe User, '.new' do
       subject { user.has_role?(:treasurer) }
 
       context 'システム管理者の場合' do
-        before { user.roles << Role.find_by(key: 'admin') }
+        before { user.roles << admin_role }
         it { should be_false }
       end
 
       context '経理担当者の場合' do
-        before { user.roles << Role.find_by(key: 'treasurer') }
+        before { user.roles << treasurer_role }
         it { should be_true }
       end
 
