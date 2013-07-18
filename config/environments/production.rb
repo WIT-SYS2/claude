@@ -71,7 +71,7 @@ Claude::Application.configure do
     user_name: ENV['SENDGRID_USER_NAME'],
     password: ENV['SENDGRID_PASSWORD'],
     authentication: 'plain',
-    domain: 'heroku.com'
+    domain: 'heroku.com',
     enable_starttls_auto: true,
   }
 
