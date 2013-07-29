@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   authorize_resource
 
   def index
-    @users = User.unscoped.order('deleted_at ASC, id ASC')
+    @users = User.with_deleted
   end
 
   def new
