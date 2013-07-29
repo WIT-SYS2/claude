@@ -33,6 +33,8 @@ class User < ActiveRecord::Base
 
   default_scope { where('deleted_at IS NULL') }
 
+  scope :with_deleted, -> { unscoped.order('CASE WHEN deleted_at IS NULL THEN 0 ELSE 1 END, deleted_at ASC, id ASC') }
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
