@@ -6,10 +6,8 @@
 # STRIPE_API_KEY: EdAvEPVEC3LuaTg5Q3z6WbDVqZlcBQ8Z
 # STRIPE_PUBLIC_KEY: pk_BRgD57O8fHja9HxduJUszhef6jCyS
 
-# 台帳番号に付与されるプレフィックス文字列（5文字固定）
-LEDGER_NUMBER_PREFIX: TBT-23
-# メールを送信する際に必要となる自身のホスト名
+LEDGER_NUMBER_PREFIX: ABC-00
 HOST: localhost
-# システムからメールを送る際に利用するGMailのアカウント
 GMAIL_USER_NAME: gmail_user_name
 GMAIL_PASSWORD: gmail_password
+
