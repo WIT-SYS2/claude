@@ -1,0 +1,12 @@
+ja:
+  activerecord:
+    state_machines:
+      states:
+        nil: ""
+      application_report:
+        state:
+          states:
+            before_application: 申請前
+            applying: 申請中
+            approved: 承認
+            rejected: 却下

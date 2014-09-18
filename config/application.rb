@@ -29,5 +29,6 @@ module Claude
     config.action_mailer.default_url_options = { host: ENV['HOST'] }
 
     config.ledger_number_prefix = ENV['LEDGER_NUMBER_PREFIX']
+    config.application_report_template_path = File.join(Rails.root, 'config', 'thinreports', 'application_report.tlf')
   end
 end
