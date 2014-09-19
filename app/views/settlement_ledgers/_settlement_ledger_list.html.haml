@@ -25,15 +25,15 @@
         %td
           - unless settlement_ledger.deleted? || settlement_ledger.completed?
             - if can? :settle, SettlementLedger
-              = link_to '精 算', edit_for_settle_settlement_ledger_path(settlement_ledger), :class => 'btn btn-mini'
+              = link_to '精 算', edit_for_settle_settlement_ledger_path(settlement_ledger), :class => 'btn btn-default btn-sm'
             - if can?(:manage, SettlementLedger) || (can?(:edit, SettlementLedger) && (settlement_ledger.applicant_user_id == @current_user.id))
               = link_to t('.edit', :default => t("helpers.links.edit")),
-                          edit_settlement_ledger_path(settlement_ledger), :class => 'btn btn-mini'
+                          edit_settlement_ledger_path(settlement_ledger), :class => 'btn btn-default btn-sm'
             - if can?(:manage, SettlementLedger) || (can?(:destroy, SettlementLedger) && (settlement_ledger.applicant_user_id == @current_user.id))
               = link_to t('.destroy', :default => t("helpers.links.destroy")),
                           settlement_ledger_path(settlement_ledger),
                           :method => :delete,
                           :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                          :class => 'btn btn-mini btn-danger'
+                          :class => 'btn btn-sm btn-danger'
 = paginate @settlement_ledgers, remote: true
 

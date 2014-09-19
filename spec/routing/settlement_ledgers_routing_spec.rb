@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'routes for SettlementLedger' do
+describe 'routes for SettlementLedger', type: :routing do
   it 'routes /' do
     expect(get('/')).to route_to('settlement_ledgers#index')
   end
