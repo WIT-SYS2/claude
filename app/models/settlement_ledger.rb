@@ -25,11 +25,10 @@ class SettlementLedger < ActiveRecord::Base
 
   belongs_to :applicant, foreign_key: 'applicant_user_id', class_name: 'User'
 
-  validates :ledger_number, length: { is: 9 },
-                            uniqueness: true
+  validates :ledger_number, length: { is: 9 }, uniqueness: true
   validates :content, presence: true, length: { maximum: 40 }
   validates :note, presence: true, length: { maximum: 200 }
-  validates :price, numericality: { only_integer: true, greater_than: 0, less_than: 1000000 }
+  validates :price, presence: true,  numericality: { only_integer: true, greater_than: 0, less_than: 1000000, allow_nil: true}
   validates :application_date, presence: true
   validates :applicant_user_id, presence: true
   validates :applicant_user_name, presence: true, length: { maximum: 40 }
@@ -71,8 +70,7 @@ class SettlementLedger < ActiveRecord::Base
 
   def assign_ledger_number
     latest = SettlementLedger.where('ledger_number LIKE ?', "#{Rails.configuration.ledger_number_prefix}%")
-                             .order('ledger_number DESC')
-                             .first
+                             .order(:ledger_number).last
     if latest
       self.ledger_number = latest.ledger_number.succ
     else

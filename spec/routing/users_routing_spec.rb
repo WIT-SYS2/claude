@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'routes for User' do
+describe 'routes for User', type: :routing do
   it 'routes /users/sign_in to the devise/sessions controller' do
     expect(get('/users/sign_in')).to route_to('devise/sessions#new')
   end

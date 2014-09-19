@@ -24,9 +24,8 @@
 #
 
 class User < ActiveRecord::Base
-  validates :name, length: { in: 4..20 }
-  validates :password, confirmation: true,
-                       length: { maximum: 40 }
+  validates :name, presence: true, length: { in: 4..20, allow_nil: true }
+  validates :password, confirmation: true, length: { maximum: 40 }
   validates :email, length: { maximum: 255 }
 
   has_and_belongs_to_many :roles

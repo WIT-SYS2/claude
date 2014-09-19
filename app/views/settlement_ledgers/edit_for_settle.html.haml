@@ -1,12 +1,10 @@
 .page-header
   %h3 精算結果の登録
 
-= simple_form_for @settlement_ledger, url: { action: 'settle' }, html: { method: :put, class: 'form-horizontal' } do |f|
-  = f.input :settlement_date, as: :string, required: false, input_html: { class: 'input-medium datepicker', value: Date.today }
-  = f.input :settlement_note, label: '備考', required: false, input_html: { class: 'input-xlarge', maxlength: 40 }
-
+= simple_form_for @settlement_ledger, url: { action: 'settle' }, html: { method: :put } do |f|
+  = f.input :settlement_date, as: :string, input_html: { class: 'datepicker', value: Date.today }
+  = f.input :settlement_note, label: '備考', input_html: { maxlength: 40 }
   = f.input :completed, label: false, as: :boolean, inline_label: '精算完了'
-  .form-actions
-    = f.button :submit, value: '登録する', :class => 'btn-primary', data: { confirm: 'よろしいですか？' }
-    = link_to t('.cancel', :default => t("helpers.links.cancel")),
-                settlement_ledgers_path, :class => 'btn'
+  = f.button :submit, value: '登録する', :class => 'btn btn-primary', data: { confirm: 'よろしいですか？' }
+  = link_to t('.cancel', :default => t("helpers.links.cancel")),
+              settlement_ledgers_path, :class => 'btn btn-default'

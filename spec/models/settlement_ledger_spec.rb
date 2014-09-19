@@ -21,159 +21,171 @@
 require 'spec_helper'
 
 describe SettlementLedger do
-
-  describe 'Validation' do
-    let(:ledger) { FactoryGirl.create(:settlement_ledger) }
-    subject { ledger }
-
+  describe 'バリデーション' do
     describe 'ledger_number' do
-      context '正しい場合' do
-        it { should have(:no).errors_on(:ledger_number) }
+      let(:ledger) { FactoryGirl.create(:settlement_ledger) }
+
+      it 'nilの場合は無効であること' do
+        ledger.ledger_number = nil
+        expect(ledger).to have(1).error_on(:ledger_number)
       end
 
-      context 'nilの場合' do
-        before { ledger.ledger_number = nil }
-        it { should have(1).errors_on(:ledger_number) }
+      it '9文字でない場合は無効であること' do
+        ledger.ledger_number = 'ABC-2300019'
+        expect(ledger).to have(1).error_on(:ledger_number)
       end
 
-      context '9文字でない場合' do
-        before { ledger.ledger_number = 'TBT-2300019' }
-        it { should have(1).errors_on(:ledger_number) }
-      end
-
-      context '重複している場合' do
-        before do
-          dup = FactoryGirl.create(:settlement_ledger)
-          ledger.ledger_number = dup.ledger_number
-        end
-        it { should have(1).errors_on(:ledger_number)}
+      it '重複している場合は無効であること' do
+        ledger.ledger_number = FactoryGirl.create(:settlement_ledger).ledger_number
+        expect(ledger).to have(1).error_on(:ledger_number)
       end
     end
 
     describe 'content' do
-      context 'nilの場合' do
-        before { ledger.content = nil }
-        it { should have(1).errors_on(:content) }
+      it 'nilの場合は無効であること' do
+        expect(SettlementLedger.new(content: nil)).to have(1).error_on(:content)
       end
 
-      context '空白の場合' do
-        before { ledger.content = '' }
-        it { should have(1).errors_on(:content) }
+      it '空白の場合は無効であること' do
+        expect(SettlementLedger.new(content: '')).to have(1).error_on(:content)
       end
 
-      context '1文字の場合' do
-        before { ledger.content = '1' }
-        it { should have(:no).errors_on(:content) }
+      it '1文字の場合は有効であること' do
+        expect(SettlementLedger.new(content: '1')).to have(:no).error_on(:content)
       end
 
-      context '40文字の場合' do
-        before { ledger.content = '1' * 40 }
-        it { should have(:no).errors_on(:content) }
+      it '40文字の場合は有効であること' do
+        expect(SettlementLedger.new(content: '1' * 40)).to have(:no).error_on(:content)
       end
 
-      context '41文字の場合' do
-        before { ledger.content = '1' * 41 }
-        it { should have(1).errors_on(:content) }
+      it '41文字の場合は有効であること' do
+        expect(SettlementLedger.new(content: '1' * 41)).to have(1).error_on(:content)
       end
     end
 
     describe 'note' do
-      context 'nilの場合' do
-        before { ledger.note = nil }
-        it { should have(1).errors_on(:note) }
+      it 'nilの場合は無効であること' do
+        expect(SettlementLedger.new(note: nil)).to have(1).error_on(:note)
       end
 
-      context '空白の場合' do
-        before { ledger.note = '' }
-        it { should have(1).errors_on(:note) }
+      it '空白の場合は無効であること' do
+        expect(SettlementLedger.new(note: '')).to have(1).error_on(:note)
       end
 
-      context '1文字の場合' do
-        before { ledger.note = '1' }
-        it { should have(:no).errors_on(:note) }
+      it '1文字の場合は有効であること' do
+        expect(SettlementLedger.new(note: '1')).to have(:no).error_on(:note)
       end
 
-      context '200文字の場合' do
-        before { ledger.note = '1' * 200 }
-        it { should have(:no).errors_on(:note) }
+      it '200文字の場合は有効であること' do
+        expect(SettlementLedger.new(note: '1' * 200)).to have(:no).error_on(:note)
       end
 
-      context '201文字の場合' do
-        before { ledger.note = '1' * 201 }
-        it { should have(1).errors_on(:note) }
+      it '201文字の場合は無効であること' do
+        expect(SettlementLedger.new(note: '1' * 201)).to have(1).error_on(:note)
       end
     end
 
     describe 'price' do
-      context 'nilの場合' do
-        before { ledger.price = nil }
-        it { should have(1).errors_on(:price) }
+      it 'nilの場合は無効であること' do
+        expect(SettlementLedger.new(price: nil)).to have(1).error_on(:price)
       end
 
-      context '0の場合' do
-        before { ledger.price = 0 }
-        it { should have(1).errors_on(:price) }
+      it '0の場合は無効であること' do
+        expect(SettlementLedger.new(price: 0)).to have(1).error_on(:price)
       end
 
-      context '1の場合' do
-        before { ledger.price = 1 }
-        it { should have(:no).errors_on(:price) }
+      it '1の場合は有効であること' do
+        expect(SettlementLedger.new(price: 1)).to have(:no).error_on(:price)
       end
 
-      context '999999の場合' do
-        before { ledger.price = 999999 }
-        it { should have(:no).errors_on(:price) }
+      it '999999の場合は有効であること' do
+        expect(SettlementLedger.new(price: 999999)).to have(:no).error_on(:price)
       end
 
-      context '1000000の場合' do
-        before { ledger.price = 1000000 }
-        it { should have(1).errors_on(:price) }
+      it '1000000の場合は無効であること' do
+        expect(SettlementLedger.new(price: 1000000)).to have(1).error_on(:price)
       end
 
-      context '小数の場合' do
-        before { ledger.price = 100.5 }
-        it { should have(1).errors_on(:price) }
+      it '小数の場合は無効であること' do
+        expect(SettlementLedger.new(price: 100.5)).to have(1).error_on(:price)
       end
     end
 
     describe 'application_date' do
-      context 'nilの場合' do
-        before { ledger.application_date = nil }
-        it { should have(1).errors_on(:application_date) }
+      it 'nilの場合は無効であること' do
+        expect(SettlementLedger.new(application_date: nil)).to have(1).error_on(:application_date)
       end
 
-      context '日付が指定されている場合' do
-        before { ledger.application_date = Date.today }
-        it { should have(:no).errors_on(:application_date) }
+      it '日付を指定した場合は有効であること' do
+        expect(SettlementLedger.new(application_date: Date.today)).to have(:no).error_on(:application_date)
       end
     end
 
     describe 'applicant_user_id' do
-      context 'nilの場合' do
-        before { ledger.applicant_user_id = nil }
-        it { should have(1).errors_on(:applicant_user_id) }
+      it 'nilの場合は無効であること' do
+        expect(SettlementLedger.new(applicant_user_id: nil)).to have(1).error_on(:applicant_user_id)
       end
 
-      context '指定されている場合' do
-        before { ledger.applicant_user_id = 1 }
-        it { should have(:no).errors_on(:applicant_user_id) }
+      it '正しい値を指定した場合は有効であること' do
+        expect(SettlementLedger.new(applicant_user_id: 1)).to have(:no).error_on(:applicant_user_id)
+      end
+    end
+
+    describe 'applicant_user_name' do
+      it 'nilの場合は無効であること' do
+        expect(SettlementLedger.new(applicant_user_name: nil)).to have(1).error_on(:applicant_user_name)
+      end
+
+      it '空白の場合は無効であること' do
+        expect(SettlementLedger.new(applicant_user_name: '')).to have(1).error_on(:applicant_user_name)
+      end
+
+      it '1文字の場合は有効であること' do
+        expect(SettlementLedger.new(applicant_user_name: '1')).to have(:no).error_on(:applicant_user_name)
+      end
+
+      it '40文字の場合は有効であること' do
+        expect(SettlementLedger.new(applicant_user_name: '1' * 40)).to have(:no).error_on(:applicant_user_name)
+      end
+
+      it '41文字の場合は無効であること' do
+        expect(SettlementLedger.new(applicant_user_name: '1' * 41)).to have(1).error_on(:applicant_user_name)
+      end
+    end
+
+    describe 'settlement_date' do
+      it 'nilの場合は有効であること' do
+        expect(SettlementLedger.new(settlement_date: nil)).to have(:no).error_on(:settlement_date)
+      end
+
+      it '日付を指定した場合は有効であること' do
+        expect(SettlementLedger.new(settlement_date: Date.today)).to have(:no).error_on(:settlement_date)
       end
     end
 
     describe 'settlement_note' do
-      context 'nilの場合' do
-        before { ledger.settlement_note = nil }
-        it { should have(:no).errors_on(:settlement_note) }
+      it 'nilの場合は有効であること' do
+        expect(SettlementLedger.new(settlement_note: nil)).to have(:no).error_on(:settlement_note)
       end
 
-      context '40文字の場合' do
-        before { ledger.settlement_note = '1' * 40 }
-        it { should have(:no).errors_on(:settlement_note) }
+      it '40文字の場合は有効であること' do
+        expect(SettlementLedger.new(settlement_note: '1' * 40)).to have(:no).error_on(:settlement_note)
       end
 
-      context '41文字の場合' do
-        before { ledger.settlement_note = '1' * 41 }
-        it { should have(1).errors_on(:settlement_note) }
+      it '41文字の場合は無効であること' do
+        expect(SettlementLedger.new(settlement_note: '1' * 41)).to have(1).error_on(:settlement_note)
+      end
+    end
+
+    describe 'completed_at' do
+      it 'nilの場合は有効であること' do
+        expect(SettlementLedger.new(completed_at: nil)).to have(:no).error_on(:completed_at)
+      end
+    end
+
+    describe 'deleted_at' do
+      it 'nilの場合は有効であること' do
+        expect(SettlementLedger.new(deleted_at: nil)).to have(:no).error_on(:deleted_at)
       end
     end
   end
@@ -184,12 +196,12 @@ describe SettlementLedger do
 
     context '完了日が設定されている場合' do
       let(:completed_at) { DateTime.now }
-      it { should be_true }
+      it { is_expected.to be true }
     end
 
     context '完了日が設定されていない場合' do
       let(:completed_at) { nil }
-      it { should be_false }
+      it { is_expected.to be false }
     end
   end
 
@@ -199,120 +211,83 @@ describe SettlementLedger do
 
     context '削除日が設定されている場合' do
       let(:deleted_at) { DateTime.now }
-      it { should be_true }
+      it { is_expected.to be true }
     end
 
     context '削除日が設定されていない場合' do
       let(:deleted_at) { nil }
-      it { should be_false }
+      it { is_expected.to be false }
     end
   end
 
   describe '#to_xlsx_value' do
-    let(:ledger) { FactoryGirl.build(:settlement_ledger, applicant_user_id: FactoryGirl.create(:user).id) }
+    let(:user) { FactoryGirl.create(:user) }
+    let(:completed_at) { nil }
+    let(:deleted_at) { nil }
+    let(:ledger) {
+      FactoryGirl.create(:settlement_ledger,
+                         { content: '営業経費精算書',
+                           note: '５月分',
+                           price: 10800,
+                           application_date: Date.today,
+                           applicant_user_id: user.id,
+                           applicant_user_name: user.name,
+                           settlement_date: 3.days.since.to_date,
+                           settlement_note: '完了しました',
+                           completed_at: completed_at,
+                           deleted_at: deleted_at })
+    }
 
-    subject { ledger.to_xlsx_value }
+    it { expect(ledger.to_xlsx_value.size).to eq 10 }
 
-    its(:size) { should == 10 }
+    it { expect(ledger.to_xlsx_value[0]).to eq ledger.ledger_number }
+    it { expect(ledger.to_xlsx_value[1]).to eq ledger.content }
+    it { expect(ledger.to_xlsx_value[2]).to eq ledger.note }
+    it { expect(ledger.to_xlsx_value[3]).to eq ledger.price }
+    it { expect(ledger.to_xlsx_value[4]).to eq ledger.application_date }
+    it { expect(ledger.to_xlsx_value[5]).to eq ledger.applicant_user_name }
+    it { expect(ledger.to_xlsx_value[6]).to eq ledger.settlement_date }
+    it { expect(ledger.to_xlsx_value[7]).to eq ledger.settlement_note }
 
-    describe '台帳No' do
-      before { ledger.ledger_number = '123456789' }
-      its([0]) { should == '123456789' }
+    context '精算が完了している場合' do
+      let(:completed_at) { Date.today }
+      it { expect(ledger.to_xlsx_value[8]).to eq '○' }
     end
 
-    describe '内容' do
-      before { ledger.content = '営業経費精算書' }
-      its([1]) { should == '営業経費精算書' }
+    context '精算が完了していない場合' do
+      let(:completed_at) { nil }
+      it { expect(ledger.to_xlsx_value[8]).to eq '×' }
     end
 
-    describe '備考' do
-      before { ledger.note = '５月分' }
-      its([2]) { should == '５月分' }
+    context '削除されている場合' do
+      let(:deleted_at) { Date.today }
+      it { expect(ledger.to_xlsx_value[9]).to eq '○' }
     end
 
-    describe '精算金額' do
-      before { ledger.price = 12345 }
-      its([3]) { should == 12345 }
-    end
-
-    describe '申請日' do
-      before { ledger.application_date = Date.today }
-      its([4]) { should == Date.today }
-    end
-
-    describe '申請者' do
-      before { ledger.applicant_user_name = '利用者１' }
-      its([5]) { should == '利用者１' }
-    end
-
-    describe '精算日' do
-      before { ledger.settlement_date = Date.today }
-      its([6]) { should == Date.today }
-    end
-
-    describe '精算備考' do
-      before { ledger.settlement_note = '精算しました' }
-      its([7]) { should == '精算しました' }
-    end
-
-    describe '精算完了' do
-      context '完了している場合' do
-        before { ledger.completed_at = DateTime.now }
-        its([8]) { should == '○' }
-      end
-      context '未完了の場合' do
-        before { ledger.completed_at = nil }
-        its([8]) { should == '×' }
-      end
-    end
-
-    describe '削除済み' do
-      context '削除されている場合' do
-        before { ledger.deleted_at = DateTime.now }
-        its([9]) { subject; should == '○' }
-      end
-      context '削除されていない場合' do
-        before { ledger.deleted_at = nil }
-        its([9]) { should == '×' }
-      end
+    context '削除されていない場合' do
+      let(:deleted_at) { nil }
+      it { expect(ledger.to_xlsx_value[9]).to eq '×' }
     end
   end
 
   describe '#assign_ledger_number' do
-    let(:ledger) { FactoryGirl.build(:settlement_ledger) }
-    subject { ledger.ledger_number }
+    let(:ledger) { FactoryGirl.build(:settlement_ledger, ledger_number: nil) }
 
     context '同年度の精算申請が存在しない場合' do
-      before do
+      before {
         FactoryGirl.create_list(:settlement_ledger, 10)
         SettlementLedger.all.each do |sl|
           new_ledger_number = sl.ledger_number.sub(Rails.configuration.ledger_number_prefix, Rails.configuration.ledger_number_prefix.succ)
           ActiveRecord::Base.connection.execute("UPDATE settlement_ledgers SET ledger_number = '#{new_ledger_number}' WHERE id = #{sl.id}")
         end
-        ledger.send(:assign_ledger_number)
-      end
+      }
 
-      it { should == Rails.configuration.ledger_number_prefix + '001' }
+      it { expect { ledger.send(:assign_ledger_number) }.to change(ledger, :ledger_number).to("#{Rails.configuration.ledger_number_prefix}001") }
     end
 
-    context '同年度の精算申請が存在し' do
-      before do
-        FactoryGirl.create_list(:settlement_ledger, 10)
-      end
-
-      context 'その申請が有効な場合' do
-        before { ledger.send(:assign_ledger_number) }
-        it { should == Rails.configuration.ledger_number_prefix + '011' }
-      end
-
-      context 'その申請が削除済の場合' do
-        before do
-          SettlementLedger.update_all(deleted_at: DateTime.now)
-          ledger.send(:assign_ledger_number)
-        end
-        it { should == Rails.configuration.ledger_number_prefix + '011' }
-      end
+    context '同年度の精算申請が存在する場合' do
+      before { FactoryGirl.create_list(:settlement_ledger, 10) }
+      it { expect { ledger.send(:assign_ledger_number) }.to change(ledger, :ledger_number).to("#{Rails.configuration.ledger_number_prefix}011") }
     end
   end
 end
-
