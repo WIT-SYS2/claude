@@ -1,10 +1,9 @@
-= simple_form_for @user, :html => { :class => 'form-horizontal' } do |f|
+= simple_form_for @user do |f|
   = f.input :name, required: false, placeholder: '名前', input_html: { maxlength: 40 }
-  = f.input :email, placeholder: 'メールアドレス', input_html: { class: 'input-xlarge', maxlength: 255 }
+  = f.input :email, placeholder: 'メールアドレス', input_html: { maxlength: 255 }
   = f.input :password, placeholder: 'パスワード', input_html: { maxlength: 40 }
   = f.input :password_confirmation, label: false, placeholder: 'パスワード', input_html: { maximum: 40 }
-  = f.association :roles, as: :check_boxes, disabled: @user == current_user
-  .form-actions
-    = f.button :submit, :class => 'btn-primary', data: { confirm: t('helpers.links.confirm', default: 'Are you sure?') }
-    = link_to t('.cancel', :default => t("helpers.links.cancel")),
-                users_path, :class => 'btn'
+  = f.association :roles, as: :check_boxes, disabled: @user == current_user, wrapper: :vertical_radio_and_checkboxes
+  = f.button :submit, :class => 'btn btn-primary', data: { confirm: t('helpers.links.confirm', default: 'Are you sure?') }
+  = link_to t('.cancel', :default => t("helpers.links.cancel")),
+              users_path, :class => 'btn btn-default'

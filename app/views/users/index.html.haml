@@ -20,13 +20,13 @@
           - unless user.deleted?
             = link_to t('.edit', :default => t("helpers.links.edit")),
                         edit_user_path(user),
-                        :class => 'btn btn-mini'
+                        :class => 'btn btn-sm btn-default'
             - if current_user != user
               = link_to t('.disable', :default => t("helpers.links.disable")),
                           user_path(user),
                           :method => :delete,
                           :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                          :class => 'btn btn-mini btn-danger'
+                          :class => 'btn btn-sm btn-danger'
 
 = link_to t('.new', :default => t("helpers.links.new")),
             new_user_path,

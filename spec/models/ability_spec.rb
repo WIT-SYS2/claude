@@ -10,8 +10,8 @@ describe Ability do
 
   context 'システム管理者の場合' do
     before do
-      user.stub(:has_role?).with(:admin).and_return(true)
-      user.stub(:has_role?).with(:treasurer).and_return(false)
+      allow(user).to receive(:has_role?).with(:admin) { true }
+      allow(user).to receive(:has_role?).with(:treasurer) { false }
     end
 
     it { should be_able_to(:manage, User) }
@@ -36,8 +36,8 @@ describe Ability do
 
   context '出納担当者の場合' do
     before do
-      user.stub(:has_role?).with(:admin).and_return(false)
-      user.stub(:has_role?).with(:treasurer).and_return(true)
+      allow(user).to receive(:has_role?).with(:admin) { false }
+      allow(user).to receive(:has_role?).with(:treasurer) { true }
     end
     
     it { should_not be_able_to(:manage, User) }
@@ -60,8 +60,8 @@ describe Ability do
 
   context '一般ユーザの場合' do
     before do
-      user.stub(:has_role?).with(:admin).and_return(false)
-      user.stub(:has_role?).with(:treasurer).and_return(false)
+      allow(user).to receive(:has_role?).with(:admin) { false }
+      allow(user).to receive(:has_role?).with(:treasurer) { false }
     end
 
     it { should_not be_able_to(:manage, User) }

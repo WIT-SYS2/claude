@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.0'
+gem 'rails', '4.1.6'
 ruby '2.1.2'
 
 # Use mysql as the database for Active Record
@@ -30,12 +30,12 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 
 gem 'rails-i18n'
-gem 'i18n_generators'
-gem 'cancan'
-gem 'devise', github: 'plataformatec/devise', branch: 'rails4'
+gem 'cancancan'
+gem 'devise'
 gem 'simple_form', github: 'plataformatec/simple_form'
-gem 'less-rails'
-gem 'twitter-bootstrap-rails'
+gem 'bootstrap-sass'
+gem 'bootstrap-datepicker-rails'
+gem 'autoprefixer-rails'
 gem 'active_decorator'
 gem 'kaminari'
 gem 'axlsx'
@@ -62,12 +62,13 @@ gem 'unicorn'
 gem 'rails_12factor', group: :production
 
 group :development, :test do
-  gem 'spring'
+  gem 'spring-commands-rspec'
   gem 'rb-fsevent'
   gem 'terminal-notifier-guard'
   gem 'rspec-rails'
+  gem 'rspec-collection_matchers'
   gem 'factory_girl_rails'
-  gem 'database_cleaner'
+  gem 'database_rewinder'
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-bundler'

@@ -26,77 +26,65 @@
 require 'spec_helper'
 
 describe User do
-  describe '.new' do
-    let(:user) { FactoryGirl.build(:user) }
-    subject { user }
-
+  describe 'バリデーション' do
     describe 'name' do
-      context'nil の場合' do
-        before { user.name = nil }
-        it { should have(1).errors_on(:name) }
+      it '未指定の場合は無効であること' do
+        expect(User.new(name: nil)).to have(1).error_on(:name)
       end
 
-      context '3文字の場合' do
-        before { user.name = '123' }
-        it { should have(1).errors_on(:name) }
+      it '3文字の場合は無効であること' do
+        expect(User.new(name: '123')).to have(1).error_on(:name)
       end
 
-      context '4文字の場合' do
-        before { user.name = '1234' }
-        it { should have(:no).errors_on(:name) }
+      it '4文字の場合は有効であること' do
+        expect(User.new(name: '1234')).to have(:no).error_on(:name)
       end
 
-      context '20文字の場合' do
-        before { user.name = '1' * 20 }
-        it { should have(:no).errors_on(:name) }
+      it '20文字の場合は有効であること' do
+        expect(User.new(name: '1' * 20)).to have(:no).error_on(:name)
       end
 
-      context '21文字の場合' do
-        before { user.name = '1' * 21 }
-        it { should have(1).errors_on(:name) }
+      it '21文字の場合は無効であること' do
+        expect(User.new(name: '1' * 21)).to have(1).error_on(:name)
       end
     end
 
     describe 'email' do
-      context'空白の場合' do
-        before { user.email = '' }
-        it { should have(1).errors_on(:email) }
+      it '未指定の場合は無効であること' do
+        expect(User.new(email: '')).to have(1).error_on(:email)
       end
 
-      context '不正な形式の場合' do
-        before { user.email = 'sample@example' }
-        it { should have(1).errors_on(:email) }
+      it '不正な形式の場合は無効であること' do
+        expect(User.new(email: 'sample@example')).to have(1).error_on(:email)
       end
 
-      context '正しい形式の場合' do
-        before { user.email = 'user@example.com' }
-        it { should have(:no).errors_on(:email) }
+      it '正しい形式の場合は有効であること' do
+        expect(User.new(email: 'sample@example.com')).to have(:no).error_on(:email)
       end
 
-      context '255文字の場合' do
-        before { user.email = 'user@example.com'.rjust(255, '0') }
-        it { should have(:no).errors_on(:email) }
+      it '255文字の場合は有効であること' do
+        expect(User.new(email: 'sample@example.com'.rjust(255, '0'))).to have(:no).error_on(:email)
       end
 
-      context '256文字の場合' do
-        before { user.email = 'user@example.com'.rjust(256, '0') }
-        it { should have(1).errors_on(:email) }
+      it '256文字の場合は無効であること' do
+        expect(User.new(email: 'sample@example.com'.rjust(256, '0'))).to have(1).error_on(:email)
       end
     end
   end
 
   describe '#deleted?' do
-    let(:user) { FactoryGirl.build(:user) }
+    let(:user) { FactoryGirl.build(:user, deleted_at: deleted_at) }
+    let(:deleted_at) { nil }
     subject { user.deleted? }
 
     context '削除日時が nil の場合' do
-      before { user.deleted_at = nil }
-      it { should be_false }
+      let(:deleted_at) { nil }
+      it { is_expected.to be false }
     end
 
     context '削除日時が設定されている場合' do
-      before { user.deleted_at = DateTime.now }
-      it { should be_true }
+      let(:deleted_at) { DateTime.now }
+      it { is_expected.to be true }
     end
   end
 
@@ -116,16 +104,16 @@ describe User do
 
       context 'システム管理者の場合' do
         before { user.roles << admin_role }
-        it { should be_true }
+        it { is_expected.to be true }
       end
 
       context '経理担当者の場合' do
         before { user.roles << treasurer_role }
-        it { should be_false }
+        it { is_expected.to be false }
       end
 
       context '通常ユーザの場合' do
-        it { user.has_role?(:admin).should be_false }
+        it { is_expected.to be false }
       end
     end
 
@@ -134,16 +122,16 @@ describe User do
 
       context 'システム管理者の場合' do
         before { user.roles << admin_role }
-        it { should be_false }
+        it { is_expected.to be false }
       end
 
       context '経理担当者の場合' do
         before { user.roles << treasurer_role }
-        it { should be_true }
+        it { is_expected.to be true }
       end
 
       context '通常ユーザの場合' do
-        it { should be_false }
+        it { is_expected.to be false }
       end
     end
   end
