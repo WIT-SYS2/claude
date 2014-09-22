@@ -29,6 +29,7 @@ class User < ActiveRecord::Base
   validates :email, length: { maximum: 255 }
 
   has_and_belongs_to_many :roles
+  has_many :application_reports
 
   default_scope { where('deleted_at IS NULL') }
 

@@ -19,8 +19,8 @@ class CreateApplicationReports < ActiveRecord::Migration
       t.string :document, limit: 100
       t.string :note
       t.integer :status, null: false, default: 1
-      t.datetime :application_date, null: false
-      t.datetime :approved_date
+      t.date :application_date, null: false
+      t.date :approved_date
       t.timestamps
     end
   end

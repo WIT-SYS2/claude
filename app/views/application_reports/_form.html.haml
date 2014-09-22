@@ -1,0 +1,20 @@
+= simple_form_for @application_report do |f|
+  = f.input :application_to, label: '申請先', input_html: { maxlength: 40 }
+  = f.input :application_date, label: '申請日付', as: :string, input_html: { class: 'datepicker' }
+  = f.input :department_name, label: '所属', input_html: { maxlength: 40 }
+  = f.input :user_name, label: '氏名', input_html: { maxlength: 20 }
+  = f.input :kind, label: '区別', collection: @application_report.decorate.kind_collections
+  = f.input :start_date, label: '申請期間(開始)', as: :string, input_html: { class: 'datepicker' }
+  = f.input :end_date, label: '申請期間(終了)', as: :string, input_html: { class: 'datepicker' }
+  = f.input :term_day, label: '申請期間(日数)'
+  = f.input :start_date_time, label: '申請期間(開始)', as: :string, input_html: { class: 'datepicker' }
+  = f.input :end_date_time, label: '申請期間(終了)', as: :string, input_html: { class: 'datepicker' }
+  = f.input :term_hour, label: '申請期間(時間)'
+  = f.input :term_minutes, label: '申請期間(分)'
+  = f.input :reason, label: '事由', input_html: { maxlength: 100 }
+  = f.input :contact, label: '連絡先', input_html: { maxlength: 100 }
+  = f.input :tel, label: '電話番号', input_html: { maxlength: 20 }
+  = f.input :document, label: '添付書類', input_html: { maxlength: 100 }
+  = f.input :note, label: '備考', hint: '区分欄の12～15の住所、式場、配偶者名、続柄など必要な事項を記入してください。', input_html: { maxlength: 255 }
+  = f.button :submit, :class => 'btn btn-primary', data: { confirm: '届書を登録します。よろしいですか？' }
+  = link_to 'キャンセル', application_reports_path, :class => 'btn btn-default'

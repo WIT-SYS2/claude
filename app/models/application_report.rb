@@ -21,8 +21,8 @@
 #  document         :string(100)
 #  note             :string(255)
 #  status           :integer          default(1), not null
-#  application_date :datetime         not null
-#  approved_date    :datetime
+#  application_date :date             not null
+#  approved_date    :date
 #  created_at       :datetime
 #  updated_at       :datetime
 #
@@ -45,18 +45,41 @@ class ApplicationReport < ActiveRecord::Base
     nativity: 14,
     other: 15,
   }
+  KIND_NAMES = {
+    paid_leave: '有給休暇',
+    compensatory_leave: '代休暇',
+    menstrual_leave: '生理休暇',
+    congratulation_or_condolence_leave: '慶弔休暇',
+    special_leave: '特別休暇',
+    absence: '欠勤',
+    tardiness: '遅刻',
+    early_leaving: '早退',
+    private_outing: '私用外出',
+    business_trip: '出張',
+    holiday_work: '休日出勤',
+    address_change: '住所変更',
+    marriage: '結婚',
+    nativity: '出生',
+    other: 'その他',
+  }
   STATUSES = {
     before_application: 1,
     applying: 2,
     approved: 3,
     rejected: 9,
   }
+  STATUS_NAMES = {
+    before_application: '申請前',
+    applying: '申請中',
+    approved: '承認',
+    rejected: '却下',
+  }
 
   validates :application_to, presence: true, length: { maximum: 40 }
   validates :user_id, presence: true
   validates :user_name, presence: true, length: { maximum: 20 }
   validates :department_name, presence: true, length: { maximum: 40 }
-  validates :kind, inclusion: { in: KINDS.values }
+  validates :kind, presence: true, inclusion: { in: KINDS.values, allow_nil: true }
   validates :term_day, numericality: { only_integer: true, greater_than: 0, less_than: 1000, allow_nil: true }
   validates :term_hour, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than: 24, allow_nil: true }
   validates :term_minutes, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than: 60, allow_nil: true }

@@ -21,8 +21,8 @@
 #  document         :string(100)
 #  note             :string(255)
 #  status           :integer          default(1), not null
-#  application_date :datetime         not null
-#  approved_date    :datetime
+#  application_date :date             not null
+#  approved_date    :date
 #  created_at       :datetime
 #  updated_at       :datetime
 #
