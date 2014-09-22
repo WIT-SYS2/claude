@@ -1,14 +1,18 @@
 language: ruby
 rvm:
-  - 2.1.2
+- 2.1.2
 env:
-  - DB=postgresql
-bundler_args: --without development --binstubs
+- DB=postgresql
+bundler_args: "--without development --binstubs"
 script:
-  - RAILS_ENV=test bundle exec rake db:migrate --trace
-  - bundle exec rake db:test:prepare
-  - bundle exec rspec
+- RAILS_ENV=test bundle exec rake db:migrate --trace
+- bundle exec rake db:test:prepare
+- bundle exec rspec
 before_script:
-  - cp config/database.travisci.yml config/database.yml
-  - cp config/application.example.yml config/application.yml
-  - psql -c 'create database claude_test' -U postgres
+- cp config/database.travisci.yml config/database.yml
+- cp config/application.example.yml config/application.yml
+- psql -c 'create database claude_test' -U postgres
+notifications:
+  hipchat:
+    rooms:
+      secure: JcqwYJEUFsb9vv7dAFwL3Inr1tcz8o70yD5bFYa6pIqfxZ+FdOYRh7ys/Wo7g41cMOgP4qMZq+OiYm1kkiwb8+ED064+rl1VZaJk1qxvOvflH+pU63mSOPEzIeQcJ2pRB1Ypp4ewP+E3gSNLnd9cpfT7GLq2UVfgme70/+2GWZg=
