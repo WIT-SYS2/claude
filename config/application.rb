@@ -28,6 +28,12 @@ module Claude
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :ja
 
+    config.generators do |g|
+      g.view_specs false
+      g.helper_specs false
+      g.helper false
+    end
+
     config.assets.initializer_on_precompile = false
     config.action_mailer.default_url_options = { host: ENV['HOST'] }
 
