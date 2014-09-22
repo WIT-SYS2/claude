@@ -6,7 +6,6 @@ env:
 bundler_args: "--without development --binstubs"
 script:
 - RAILS_ENV=test bundle exec rake db:migrate --trace
-- bundle exec rake db:test:prepare
 - bundle exec rspec
 before_script:
 - cp config/database.travisci.yml config/database.yml
