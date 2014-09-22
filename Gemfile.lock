@@ -23,7 +23,6 @@ GEM
       activesupport (= 4.1.6)
       builder (~> 3.1)
       erubis (~> 2.7.0)
-    active_decorator (0.3.4)
     activemodel (4.1.6)
       activesupport (= 4.1.6)
       builder (~> 3.1)
@@ -73,6 +72,11 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
+    draper (1.4.0)
+      actionpack (>= 3.0)
+      activemodel (>= 3.0)
+      activesupport (>= 3.0)
+      request_store (~> 1.0)
     erubis (2.7.0)
     execjs (2.2.1)
     factory_girl (4.4.0)
@@ -183,6 +187,7 @@ GEM
     rdoc (4.1.2)
       json (~> 1.4)
     ref (1.0.5)
+    request_store (1.1.0)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
       rspec-expectations (~> 3.1.0)
@@ -260,7 +265,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_decorator
   annotate
   autoprefixer-rails
   axlsx
@@ -270,6 +274,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   database_rewinder
   devise
+  draper
   factory_girl_rails
   figaro
   guard
