@@ -20,7 +20,7 @@
 #  tel              :string(20)
 #  document         :string(100)
 #  note             :string(255)
-#  state            :string(255)
+#  status           :integer          default(1), not null
 #  application_date :datetime         not null
 #  approved_date    :datetime
 #  created_at       :datetime
@@ -45,6 +45,12 @@ class ApplicationReport < ActiveRecord::Base
     nativity: 14,
     other: 15,
   }
+  STATUSES = {
+    before_application: 1,
+    applying: 2,
+    approved: 3,
+    rejected: 9,
+  }
 
   validates :application_to, presence: true, length: { maximum: 40 }
   validates :user_id, presence: true
@@ -59,25 +65,11 @@ class ApplicationReport < ActiveRecord::Base
   validates :tel, length: { maximum: 20 }, format: { with: /\A^[0-9-]*\Z/ }
   validates :document, length: { maximum: 100 }
   validates :note, length: { maximum: 255 }
+  validates :status, inclusion: { in: STATUSES.values }
   validates :application_date, presence: true
 
-  state_machine initial: :before_application do
-    state :before_application
-    state :applying
-    state :approved
-    state :rejected
-
-    event :apply do
-      transition before_application: :applying
-    end
-
-    event :approve do
-      transition applying: :approved
-    end
-
-    event :reject do
-      transition applying: :rejected
-    end
+  before_validation on: :create do
+    self.status = STATUSES[:before_application]
   end
 
   def generate_pdf

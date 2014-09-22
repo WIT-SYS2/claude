@@ -42,7 +42,6 @@ gem 'axlsx'
 gem 'figaro'
 gem 'haml-rails'
 gem 'thinreports'
-gem 'state_machine'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

@@ -18,7 +18,7 @@ class CreateApplicationReports < ActiveRecord::Migration
       t.string :tel, limit: 20
       t.string :document, limit: 100
       t.string :note
-      t.string :state
+      t.integer :status, null: false, default: 1
       t.datetime :application_date, null: false
       t.datetime :approved_date
       t.timestamps
