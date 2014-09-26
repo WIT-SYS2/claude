@@ -91,8 +91,14 @@ class ApplicationReport < ActiveRecord::Base
   validates :status, inclusion: { in: STATUSES.values }
   validates :application_date, presence: true
 
+  validates_with ApplicationReportValidator
+
   before_validation on: :create do
     self.status = STATUSES[:before_application]
+  end
+
+  def has_term_error?
+    (self.errors.keys & [:term, :start_date, :end_date, :term_day, :start_date_time, :end_date_time, :term_hour, :term_minutes]).present?
   end
 
   def generate_pdf

@@ -13,7 +13,7 @@
   %tbody
     - @users.each do |user|
       %tr{class: user.deleted? ? 'deleted' : '' }
-        %td= image_tag user.avatar_url
+        %td= image_tag user.decorate.avatar_url
         %td= user.name
         %td= user.email
         %td

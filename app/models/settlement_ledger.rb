@@ -21,8 +21,6 @@
 class SettlementLedger < ActiveRecord::Base
   EXCEL_HEADER = %w[台帳No 内容 備考 精算金額 申請日 申請者 精算日 備考 精算完了 削除]
 
-  attr_accessor :completed
-
   belongs_to :applicant, foreign_key: 'applicant_user_id', class_name: 'User'
 
   validates :ledger_number, length: { is: 9 }, uniqueness: true

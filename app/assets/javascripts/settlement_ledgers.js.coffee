@@ -1,5 +1,5 @@
 $ ->
-  $('.datepicker').datepicker({language: 'ja'})
+  $('.datepicker').datepicker({language: 'ja', format: 'yyyy-mm-dd'})
   $('#conditionTab a:first').tab('show')
   $('a[data-toggle="tab"]').on('shown.bs.tab', (e) ->
     $.ajax

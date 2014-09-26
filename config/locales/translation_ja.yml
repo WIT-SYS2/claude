@@ -16,10 +16,33 @@ ja:
 
   activerecord:
     models:
+      application_report: 届書
       settlement_ledger: 精算台帳  #g
       user: ユーザー  #g
 
     attributes:
+      application_report:
+        application_to: 申請先
+        user_id: ユーザ
+        user_name: 氏名
+        department_name: 所属
+        kind: 区別
+        start_date: 申請期間(開始)
+        end_date: 申請期間(終了)
+        term_day: 申請日数
+        start_date_time: 申請時間(開始)
+        end_date_time: 申請時間(終了)
+        term_hour: 申請時間(時間)
+        term_minutes: 申請時間(分)
+        reason: 事由
+        contact: 連絡先
+        tel: 電話番号
+        document: 添付書類
+        note: 備考
+        status: 状態
+        application_date: 申請日
+        approved_date: 承認日
+
       settlement_ledger:
         ledger_number: 台帳No  #g
         content: 内容  #g

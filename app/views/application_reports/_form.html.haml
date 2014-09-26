@@ -1,20 +1,44 @@
-= simple_form_for @application_report do |f|
-  = f.input :application_to, label: '申請先', input_html: { maxlength: 40 }
-  = f.input :application_date, label: '申請日付', as: :string, input_html: { class: 'datepicker' }
-  = f.input :department_name, label: '所属', input_html: { maxlength: 40 }
-  = f.input :user_name, label: '氏名', input_html: { maxlength: 20 }
-  = f.input :kind, label: '区別', collection: @application_report.decorate.kind_collections
-  = f.input :start_date, label: '申請期間(開始)', as: :string, input_html: { class: 'datepicker' }
-  = f.input :end_date, label: '申請期間(終了)', as: :string, input_html: { class: 'datepicker' }
-  = f.input :term_day, label: '申請期間(日数)'
-  = f.input :start_date_time, label: '申請期間(開始)', as: :string, input_html: { class: 'datepicker' }
-  = f.input :end_date_time, label: '申請期間(終了)', as: :string, input_html: { class: 'datepicker' }
-  = f.input :term_hour, label: '申請期間(時間)'
-  = f.input :term_minutes, label: '申請期間(分)'
-  = f.input :reason, label: '事由', input_html: { maxlength: 100 }
-  = f.input :contact, label: '連絡先', input_html: { maxlength: 100 }
-  = f.input :tel, label: '電話番号', input_html: { maxlength: 20 }
-  = f.input :document, label: '添付書類', input_html: { maxlength: 100 }
-  = f.input :note, label: '備考', hint: '区分欄の12～15の住所、式場、配偶者名、続柄など必要な事項を記入してください。', input_html: { maxlength: 255 }
-  = f.button :submit, :class => 'btn btn-primary', data: { confirm: '届書を登録します。よろしいですか？' }
-  = link_to 'キャンセル', application_reports_path, :class => 'btn btn-default'
+= simple_form_for @application_report, html: { class: 'form-horizontal' } do |f|
+  = f.input :application_to, input_html: { maxlength: 40 }
+  = f.input :application_date, as: :string, input_html: { class: 'datepicker' }
+  = f.input :department_name, input_html: { maxlength: 40 }
+  = f.input :user_name, input_html: { maxlength: 20, readonly: true }
+  = f.input :kind, collection: @application_report.decorate.kind_collections
+
+  - error_class = @application_report.has_term_error? ? 'has-error' : ''
+  .form-group.string.optional{class: error_class}
+    %label.col-sm-2.control-label 申請期間
+    .col-sm-10
+      = text_field_tag 'start_date', @application_report.start_date, id: 'application_report_start_date', name: 'application_report[start_date]', class: 'string optional form-control datepicker', size: 10, maxlength: 10, style: 'width: auto; display: inline;'
+      ～
+      = text_field_tag 'end_date', @application_report.end_date, id: 'application_report_end_date', name: 'application_report[end_date]', class: 'string optional form-control datepicker', size: 10, maxlength: 10, style: 'width: auto; display: inline;'
+      (
+      = select_tag 'application_report[term_day]', options_for_select((1..10).map{|n| [n, n] }, @application_report.term_day), include_blank: true, class: 'form-control', style: 'width: auto; display: inline;'
+      %span 日間)
+
+      %br
+
+      = text_field_tag 'start_date_time_date', @application_report.decorate.start_date_time_date, class: 'string optional form-control datepicker', size: 10, maxlength: 10, style: 'width: auto; display: inline;'
+      = select_tag :start_date_time_hour, options_for_select((6..23).map{|n| [n, n] }, @application_report.decorate.start_date_time_hour), include_blank: true, class: 'form-control', style: 'width: auto; display: inline;'
+      時
+      = select_tag :start_date_time_minutes, options_for_select([[0, 0], [30, 30]], @application_report.decorate.start_date_time_minutes), include_blank: true, class: 'form-control', style: 'width: auto; display: inline;'
+      分 ～
+      = select_tag :end_date_time_hour, options_for_select((6..23).map{|n| [n, n] }, @application_report.decorate.end_date_time_hour), include_blank: true, class: 'form-control', style: 'width: auto; display: inline;'
+      時
+      = select_tag :end_date_time_minutes, options_for_select([[0, 0], [30, 30]], @application_report.decorate.end_date_time_minutes), include_blank: true, class: 'form-control', style: 'width: auto; display: inline;'
+      分 (
+      = select_tag 'application_report[term_hour]', options_for_select((0..10).map{|n| [n, n] }, @application_report.term_hour), include_blank: true, class: 'form-control', style: 'width: auto; display: inline;'
+      時間
+      = select_tag 'application_report[term_minutes]', options_for_select([[0, 0], [30, 30]], @application_report.term_minutes), include_blank: true, class: 'form-control', style: 'width: auto; display: inline;'
+      分)
+      - if error_class.present?
+        %span.help-block 申請期間を正しく指定してください。
+  = f.input :reason, input_html: { maxlength: 100 }
+  = f.input :contact, input_html: { maxlength: 100 }
+  = f.input :tel, input_html: { maxlength: 20 }
+  = f.input :document, input_html: { maxlength: 100 }
+  = f.input :note, hint: '区分欄の12～15の住所、式場、配偶者名、続柄など必要な事項を記入してください。', input_html: { maxlength: 255 }
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.button :submit, :class => 'btn btn-primary', data: { confirm: '届書を登録します。よろしいですか？' }
+      = link_to 'キャンセル', application_reports_path, :class => 'btn btn-default'
