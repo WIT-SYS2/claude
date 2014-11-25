@@ -22,6 +22,7 @@ class SettlementLedgersController < ApplicationController
   # GET /settlement_ledgers/new
   def new
     @settlement_ledger = SettlementLedger.new
+    # @products = Product.all
   end
 
   # GET /settlement_ledgers/1/edit
