@@ -15,7 +15,8 @@
     - @settlement_ledgers.each do |settlement_ledger|
       %tr{class: settlement_ledger.deleted? ? 'deleted' : ''}
         %td= settlement_ledger.ledger_number
-        %td= settlement_ledger.content
+        %td= link_to t('.new', :default => settlement_ledger.content),
+                      new_settlement_ledger_path(settlement_ledger)
         %td= settlement_ledger.note
         %td.text-right= number_with_delimiter(settlement_ledger.price)
         %td= settlement_ledger.application_date
