@@ -9,12 +9,12 @@ describe 'routes for SettlementLedger', type: :routing do
     expect(get('/settlement_ledgers')).to route_to('settlement_ledgers#index')
   end
 
-  it 'routes /settlement_ledgers/show to the settlement_ledgers controller' do
-    expect(get('/settlement_ledgers/show')).to be_routable
-  end
-
   it 'routes /settlement_ledgers/new to the settlement_ledgers controller' do
     expect(get('/settlement_ledgers/new')).to route_to('settlement_ledgers#new')
+  end
+
+  it 'routes /settlement_ledgers/5 to the settlement_ledgers controller' do
+    expect(get('/settlement_ledgers/5')).to route_to('settlement_ledgers#show', id: '5')
   end
 
   it 'routes /settlement_ledgers to the settlement_ledgers controller' do
