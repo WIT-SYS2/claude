@@ -1,5 +1,7 @@
 = simple_form_for @settlement_ledger do |f|
-  = f.input :content,:collection => SettlementLedger::CONTENT_VALUE,:label => "内容", :include_blank => false
+  = f.input :content,:collection => SettlementLedger::CONTENT_VALUE,:label => "内容",
+            :include_blank => false,
+            hint: '「営業経費精算書」「出張精算書」など'
   = f.input :note, label: '備考', input_html: { maxlength: 200 }
   = f.input :price, label: '金額'
   = f.input :application_date, label: '申請日付', as: :string, input_html: { class: 'datepicker', value: Date.today }

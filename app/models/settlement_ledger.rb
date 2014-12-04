@@ -67,14 +67,6 @@ class SettlementLedger < ActiveRecord::Base
     ]
   end
 
-  # kobayashi
-  # def put_ledger_number
-  #   names.each do |name|
-  #     random = [*1..10].sample  # 1から10のランダム値を取得
-  #     Product.create! name: name, price: random * 1000, released_on: random.day.ago
-  #   end
-  # end
-
   def self.import(file)
     spreadsheet = open_spreadsheet(file)
     header = spreadsheet.row(1)
