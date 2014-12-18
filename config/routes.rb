@@ -12,6 +12,7 @@ Claude::Application.routes.draw do
     member do
       get :edit_for_settle
       put :settle
+      get :settlement_ledger_number_download
     end
   end
 
@@ -55,7 +56,7 @@ Claude::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'

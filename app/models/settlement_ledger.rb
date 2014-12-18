@@ -67,6 +67,11 @@ class SettlementLedger < ActiveRecord::Base
     ]
   end
 
+  #excelファイルの保存先
+  def file_path
+    "public/data/#{id}"
+  end
+
   private
 
   def assign_ledger_number

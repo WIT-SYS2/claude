@@ -1,7 +1,7 @@
 class SettlementLedgersController < ApplicationController
   before_filter :authenticate_user!
   before_action :set_settlement_ledger,
-    only: [:edit, :update, :destroy, :edit_for_settle, :settle]
+    only: [:edit, :update, :destroy, :edit_for_settle, :settle, :settlement_ledger_number_download]
   authorize_resource
 
   # GET /settlement_ledgers
@@ -32,9 +32,19 @@ class SettlementLedgersController < ApplicationController
   # POST /settlement_ledgers
   # POST /settlement_ledgers.json
   def create
+    file = params[:settlement_ledger][:file]
+
     @settlement_ledger = SettlementLedger.new(settlement_ledger_params)
     @settlement_ledger.applicant_user_id = current_user.id
     @settlement_ledger.applicant_user_name = current_user.name
+    @settlement_ledger.file_name = file.original_filename if file.present?
+    @settlement_ledger.save
+
+    if file.present?
+      File.open(@settlement_ledger.file_path, "wb") { |f|
+        f.write(file.read)
+      }
+    end
 
     respond_to do |format|
       if @settlement_ledger.save
@@ -104,6 +114,12 @@ class SettlementLedgersController < ApplicationController
         format.json { render json: @settlement_ledger.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def settlement_ledger_number_download
+    send_data(File.read(@settlement_ledger.file_path),
+              type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+              filename: @settlement_ledger.file_name)
   end
 
   private

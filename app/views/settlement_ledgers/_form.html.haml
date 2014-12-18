@@ -2,6 +2,10 @@
   = f.input :content,:collection => SettlementLedger::CONTENT_VALUE,:label => "内容",
             :include_blank => false,
             hint: '「営業経費精算書」「出張精算書」など'
+  = f.label '精算書をアップロードしてください'
+  -# = f.file_field :import, :class => 'field'
+  = f.file_field :file, :class => 'field', :allow_blank => true
+  = p 'ここでアップロードしたファイルを一覧画面でダウンロードすると、取得した台帳番号を記載して出力できます。'
   = f.input :note, label: '備考', input_html: { maxlength: 200 }
   = f.input :price, label: '金額'
   = f.input :application_date, label: '申請日付', as: :string, input_html: { class: 'datepicker', value: Date.today }
