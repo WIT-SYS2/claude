@@ -41,6 +41,7 @@ gem 'kaminari'
 gem 'axlsx'
 gem 'figaro'
 gem 'haml-rails'
+gem 'spreadsheet'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

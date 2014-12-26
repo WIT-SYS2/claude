@@ -293,6 +293,6 @@ describe SettlementLedger do
 
   describe '#file_path' do
     let(:ledger) { FactoryGirl.create(:settlement_ledger) }
-    it { expect(ledger.file_path).to eq "public/data/#{ledger.id}" }
+    it { expect(ledger.file_path).to eq "public/data/#{ledger.id}.xls" }
   end
 end

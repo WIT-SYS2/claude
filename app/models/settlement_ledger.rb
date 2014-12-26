@@ -69,7 +69,11 @@ class SettlementLedger < ActiveRecord::Base
 
   #excelファイルの保存先
   def file_path
-    "public/data/#{id}"
+    "public/data/#{id}.xls"
+  end
+
+  def file_download_path
+    "public/data/download/#{id}.xls"
   end
 
   private

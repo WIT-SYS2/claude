@@ -44,6 +44,10 @@ class SettlementLedgersController < ApplicationController
       File.open(@settlement_ledger.file_path, "wb") { |f|
         f.write(file.read)
       }
+      book = Spreadsheet.open(@settlement_ledger.file_path)
+      sheet = book.worksheet(0)
+      sheet[0,14] = @settlement_ledger.ledger_number
+      book.write(@settlement_ledger.file_download_path)
     end
 
     respond_to do |format|
@@ -117,9 +121,9 @@ class SettlementLedgersController < ApplicationController
   end
 
   def settlement_ledger_number_download
-    send_data(File.read(@settlement_ledger.file_path),
+    send_data(File.read(@settlement_ledger.file_download_path),
               type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-              filename: @settlement_ledger.file_name)
+              filename: '営業経費精算書.xls')
   end
 
   private
