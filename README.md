@@ -1,6 +1,6 @@
 # Claude
 
-[![Build Status](https://travis-ci.org/shizm/claude.png?branch=master)](https://travis-ci.org/shizm/claude)
+[![Build Status](https://travis-ci.org/WIT-SYS2/claude.png?branch=master)](https://travis-ci.org/WIT-SYS2/claude)
 
 ## About
 
@@ -11,7 +11,7 @@ Ruby 2.x + Rails 4.x + SQLite3 という環境での実行を前提としてい�
 
 リポジトリをローカル環境にクローンします。
 
-    $ git clone git://github.com/shizm/claude.git
+    $ git clone git://github.com/WIT-SYS2/claude.git
 
 必要なgemをインストールします。
 
@@ -64,4 +64,4 @@ Guardを利用したテストの自動実行を開始する場合は以下のコ
     bundle exec guard
 
 ## Feature Requests & Bugs
-<http://github.com/shizm/claude/issues>
+<http://github.com/WIT-SYS2/claude/issues>
