@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: roles
+#
+#  id   :integer          not null, primary key
+#  name :string(20)       not null
+#  key  :string(20)       not null
+#  sort :integer          not null
+#
+
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do

@@ -17,6 +17,8 @@ module Claude
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
+    config.autoload_paths += %W(#{config.root}/app/validators)
+
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
@@ -38,5 +40,7 @@ module Claude
     config.action_mailer.default_url_options = { host: ENV['HOST'] }
 
     config.ledger_number_prefix = ENV['LEDGER_NUMBER_PREFIX']
+    config.application_to = ENV['APPLICATION_TO']
+    config.application_report_template_path = File.join(Rails.root, 'config', 'thinreports', 'application_report.tlf')
   end
 end

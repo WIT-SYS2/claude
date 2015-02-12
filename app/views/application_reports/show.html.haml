@@ -1,0 +1,43 @@
+%dl.dl-horizontal
+  %dt 申請先
+  %dd= @application_report.application_to
+
+  %dt 申請日付
+  %dd= l @application_report.application_date
+
+  %dt 所属
+  %dd= @application_report.department_name
+
+  %dt 氏名
+  %dd= @application_report.user_name
+
+  %dt 区別
+  %dd= @application_report.decorate.kind_name
+
+  %dt 期間・日時
+  %dd
+    = @application_report.decorate.term_date
+    - if @application_report.decorate.term_date_time.present?
+      %br
+      = @application_report.decorate.term_date_time
+
+  %dt 事由
+  %dd= @application_report.reason
+
+  %dt 連絡先
+  %dd= @application_report.contact
+
+  %dt 電話番号
+  %dd= @application_report.tel
+
+  %dt 添付書類
+  %dd= @application_report.document
+
+  %dt 備考
+  %dd= @application_report.note
+
+
+= link_to '一覧に戻る', application_reports_path, class: 'btn btn-default'
+= link_to '申 請', '#', class: 'btn btn-primary'
+= link_to '編 集', edit_application_report_path(@application_report), class: 'btn btn-primary'
+= link_to 'ダウンロード', download_application_report_path(@application_report), class: 'btn btn-primary'

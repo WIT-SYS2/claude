@@ -36,11 +36,12 @@ gem 'simple_form', github: 'plataformatec/simple_form'
 gem 'bootstrap-sass'
 gem 'bootstrap-datepicker-rails'
 gem 'autoprefixer-rails'
-gem 'active_decorator'
+gem 'draper'
 gem 'kaminari'
 gem 'axlsx'
 gem 'figaro'
 gem 'haml-rails'
+gem 'thinreports'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

@@ -1,21 +1,23 @@
 .page-header
   %h3
     プロフィールの編集
-    = image_tag @user.avatar_url
+    = image_tag @user.decorate.avatar_url
 
-= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-horizontal', method: :put }) do |f|
   = f.error_notification
 
-  = f.input :name, autofocus: true, placeholder: '名前', input_html: { maxlength: 40 }
-  = f.input :email, required: true, placeholder: 'メールアドレス', input_html: { class: 'input-xlarge', maxlength: 200 }
+  = f.input :name, autofocus: true, input_html: { maxlength: 40 }
+  = f.input :email, required: true, input_html: { class: 'input-xlarge', maxlength: 200 }
 
   - if devise_mapping.confirmable? && resource.pending_reconfirmation?
     %p 現在確認中です: #{resource.unconfirmed_email}
 
-  = f.input :password, autocomplete: 'off', hint: 'パスワードを変更しない場合は空白のままにしてください。', required: false, placeholder: '新しいパスワード'
-  = f.input :password_confirmation, required: false, placeholder: '新しいパスワード', input_html: { maxlength: 40 }
-  = f.input :current_password, hint: '確認のため、現在のパスワードを入力してください。', required: true, placeholder: '現在のパスワード', input_html: { maxlength: 40 }
+  = f.input :password, autocomplete: 'off', hint: 'パスワードを変更しない場合は空白のままにしてください。', required: false
+  = f.input :password_confirmation, required: false, input_html: { maxlength: 40 }
+  = f.input :current_password, hint: '確認のため、現在のパスワードを入力してください。', required: true, input_html: { maxlength: 40 }
 
-  = f.button :submit, class: 'btn btn-primary'
-  = link_to t('.cancel', :default => t("helpers.links.cancel")),
-              root_path, :class => 'btn btn-default'
+  .form-group
+    .col-sm-offset-2.col-sm-10
+      = f.button :submit, class: 'btn btn-primary'
+      = link_to t('.cancel', :default => t("helpers.links.cancel")),
+                  root_path, :class => 'btn btn-default'

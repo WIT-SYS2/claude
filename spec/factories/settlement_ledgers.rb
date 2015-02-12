@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: settlement_ledgers
+#
+#  id                  :integer          not null, primary key
+#  ledger_number       :string(9)        not null
+#  content             :string(40)       not null
+#  note                :string(200)      not null
+#  price               :integer          not null
+#  application_date    :date             not null
+#  applicant_user_id   :integer          not null
+#  applicant_user_name :string(40)       not null
+#  settlement_date     :date
+#  settlement_note     :string(40)
+#  completed_at        :datetime
+#  deleted_at          :datetime
+#  created_at          :datetime
+#  updated_at          :datetime
+#
+
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do

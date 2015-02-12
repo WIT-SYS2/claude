@@ -10,4 +10,5 @@ LEDGER_NUMBER_PREFIX: ABC-00
 HOST: localhost
 GMAIL_USER_NAME: gmail_user_name
 GMAIL_PASSWORD: gmail_password
+APPLICATION_TO: (株)○○システム
 

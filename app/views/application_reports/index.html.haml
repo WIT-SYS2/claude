@@ -1,0 +1,28 @@
+.page-header
+  %h3 届書の一覧
+
+%table.table.table-hover
+  %thead
+    %tr
+      %th 申請日
+      %th 申請者
+      %th 区別
+      %th 期間・日時
+      %th 状態
+      %th
+  %tbody
+    - @application_reports.each do |application_report|
+      %tr
+        %td= l application_report.application_date
+        %td= application_report.user_name
+        %td= application_report.decorate.kind_name
+        %th
+          = application_report.decorate.term_date if application_report.decorate.term_date
+          - if application_report.decorate.term_date_time
+            %br
+            = application_report.decorate.term_date_time
+        %th= application_report.decorate.status_name
+        %th
+          = link_to '表示', application_report_path(application_report)
+
+= link_to '新規作成', new_application_report_path, class: 'btn btn-primary'

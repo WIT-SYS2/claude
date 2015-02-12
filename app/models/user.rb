@@ -26,9 +26,10 @@
 class User < ActiveRecord::Base
   validates :name, presence: true, length: { in: 4..20, allow_nil: true }
   validates :password, confirmation: true, length: { maximum: 40 }
-  validates :email, length: { maximum: 255 }
+  validates :email, presence: true, length: { maximum: 255 }
 
   has_and_belongs_to_many :roles
+  has_many :application_reports
 
   default_scope { where('deleted_at IS NULL') }
 

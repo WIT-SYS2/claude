@@ -32,8 +32,10 @@
           = link_to 'Claude', root_url, class: "navbar-brand"
         #bs-example-navbar-collapse-1.navbar-collapse.collapse
           - if user_signed_in?
-            - if can? :manage, User
-              %ul.nav.navbar-nav
+            %ul.nav.navbar-nav
+              %li
+                = link_to '届書管理', application_reports_url
+              - if can? :manage, User
                 %li
                   = link_to 'ユーザ管理', users_url
             %ul.nav.navbar-nav.pull-right

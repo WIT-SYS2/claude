@@ -89,30 +89,25 @@ class SettlementLedgersController < ApplicationController
   end
 
   def settle
-    if params[:settlement_ledger].delete(:completed) == "1"
-      params[:settlement_ledger][:completed_at] = DateTime.now
-    else
-      params[:settlement_ledger][:completed_at] = nil
-    end
+    params[:settlement_ledger][:completed_at] = DateTime.now
     respond_to do |format|
       if @settlement_ledger.update(settlement_ledger_params)
         format.html { redirect_to settlement_ledgers_url, notice: '精算依頼を更新しました。' }
         format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
+        format.html { render action: 'edit_for_settle' }
         format.json { render json: @settlement_ledger.errors, status: :unprocessable_entity }
       end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_settlement_ledger
-      @settlement_ledger = SettlementLedger.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def settlement_ledger_params
-      params.require(:settlement_ledger).permit(:content, :note, :price, :application_date, :settlement_date, :settlement_note, :completed_at)
-    end
+  def set_settlement_ledger
+    @settlement_ledger = SettlementLedger.find(params[:id])
+  end
+
+  def settlement_ledger_params
+    params.require(:settlement_ledger).permit(:content, :note, :price, :application_date, :settlement_date, :settlement_note, :completed_at)
+  end
 end
