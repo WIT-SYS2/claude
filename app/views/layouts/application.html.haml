@@ -38,7 +38,7 @@
                   = link_to 'ユーザ管理', users_url
             %ul.nav.navbar-nav.pull-right
               %li
-                = link_to edit_user_registration_url do
+                = link_to '#' do
                   %span.glyphicon.glyphicon-user #{current_user.name}
               %li
                 = link_to 'ログアウト', destroy_user_session_url, method: :delete

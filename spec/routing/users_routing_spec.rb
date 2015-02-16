@@ -13,38 +13,6 @@ describe 'routes for User', type: :routing do
     expect(delete('/users/sign_out')).to route_to('devise/sessions#destroy')
   end
 
-  it 'routes /users/password to the devise/passwords controller' do
-    expect(get('/users/password/new')).to route_to('devise/passwords#new')
-  end
-
-  it 'routes /users/password to the devise/passwords controller' do
-    expect(post('/users/password')).to route_to('devise/passwords#create')
-  end
-
-  it 'routes /users/password to the devise/passwords controller' do
-    expect(get('/users/password/edit')).to route_to('devise/passwords#edit')
-  end
-
-  it 'routes /users/password to the devise/passwords controller' do
-    expect(put('/users/password')).to route_to('devise/passwords#update')
-  end
-
-  it 'routes /users/password to the devise/passwords controller' do
-    expect(patch('/users/password')).to route_to('devise/passwords#update')
-  end
-
-  it 'routes /users/confirmation to the devise/confirmations controller' do
-    expect(get('/users/confirmation')).to route_to('devise/confirmations#show')
-  end
-
-  it 'routes /users/confirmation to the devise/confirmations controller' do
-    expect(get('/users/confirmation/new')).to route_to('devise/confirmations#new')
-  end
-
-  it 'routes /users/confirmation to the devise/confirmations controller' do
-    expect(post('/users/confirmation')).to route_to('devise/confirmations#create')
-  end
-
   it 'routes /users/edit to the devise/registrations controller' do
     expect(get('/users/edit')).to route_to('devise/registrations#edit')
   end
