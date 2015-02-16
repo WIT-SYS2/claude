@@ -34,11 +34,8 @@ class User < ActiveRecord::Base
 
   scope :with_deleted, -> { unscoped.order('CASE WHEN deleted_at IS NULL THEN 0 ELSE 1 END, deleted_at ASC, id ASC') }
 
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
-  # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable, :confirmable,
-         :recoverable, :rememberable, :trackable, :validatable
+  # Include selected devise modules only not deliver email.
+  devise :database_authenticatable, :trackable, :validatable, :rememberable
 
   def deleted?
     deleted_at.present?
