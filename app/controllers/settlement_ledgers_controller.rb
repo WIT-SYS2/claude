@@ -8,7 +8,7 @@ class SettlementLedgersController < ApplicationController
   # GET /settlement_ledgers.json
   def index
     params[:page] ||= 1
-    @settlement_ledgers = SettlementLedger.unscoped
+    @settlement_ledgers = SettlementLedger.order('ledger_number DESC')
     unless params[:target] == "all"
       @settlement_ledgers = @settlement_ledgers.not_completed.not_deleted
     end

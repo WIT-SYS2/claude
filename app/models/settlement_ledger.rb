@@ -34,8 +34,6 @@ class SettlementLedger < ActiveRecord::Base
   validates :applicant_user_name, presence: true, length: { maximum: 40 }
   validates :settlement_note, length: { maximum: 40 }
 
-  default_scope { order('ledger_number ASC') }
-
   scope :completed, -> { where('completed_at IS NOT NULL') }
   scope :not_completed, -> { where('completed_at IS NULL') }
   scope :deleted, -> { where('deleted_at IS NOT NULL') }
