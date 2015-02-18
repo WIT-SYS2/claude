@@ -24,6 +24,10 @@ class SettlementLedgersController < ApplicationController
     @settlement_ledger = SettlementLedger.new
   end
 
+  def show
+    @settlement_ledger = SettlementLedger.find(params[:id])
+  end
+
   # GET /settlement_ledgers/1/edit
   def edit
   end

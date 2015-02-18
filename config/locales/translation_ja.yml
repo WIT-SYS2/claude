@@ -4,6 +4,8 @@ ja:
       title: 精算申請一覧
     new:
       title: 精算申請の新規作成
+    show:
+      title: 精算申請の詳細
     edit:
       title: 精算申請の編集
   users:

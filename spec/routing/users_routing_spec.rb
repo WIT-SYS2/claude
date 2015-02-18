@@ -25,8 +25,8 @@ describe 'routes for User', type: :routing do
     expect(get('/users')).to route_to('users#index')
   end
 
-  it 'routes /users/10 to the users controller' do
-    expect(get('/users/10')).not_to be_routable
+  it 'routes /users/show to the users controller' do
+    expect(get('/users/show')).to be_routable
   end
 
   it 'routes /users/new to the users controller' do

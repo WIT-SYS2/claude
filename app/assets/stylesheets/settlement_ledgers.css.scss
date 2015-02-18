@@ -1,3 +1,13 @@
 td.text-right {
-	text-align: right;
+  text-align: right;
+}
+
+.dl-horizontal {
+  dt, dd {
+    margin-bottom: 0.5%;
+  }
+}
+
+.page-footer {
+  width: 100%;
 }

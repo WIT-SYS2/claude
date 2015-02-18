@@ -1,0 +1,29 @@
+- model_class = SettlementLedger
+.page-header.form-group
+%h3= t '.title', :default => model_class.model_name.human.pluralize.titleize
+
+%dl.dl-horizontal
+  %dt= model_class.human_attribute_name(:ledger_number)
+  %dd= @settlement_ledger.ledger_number
+  %dt= model_class.human_attribute_name(:content)
+  %dd= @settlement_ledger.content
+  %dt= model_class.human_attribute_name(:note)
+  %dd= @settlement_ledger.note
+  %dt= model_class.human_attribute_name(:price)
+  %dd= number_to_currency(@settlement_ledger.price)
+  %dt= model_class.human_attribute_name(:application_date)
+  %dd= @settlement_ledger.application_date
+  %dt= model_class.human_attribute_name(:applicant_user_name)
+  %dd= @settlement_ledger.applicant_user_name
+%dl.dl-horizontal
+  %dt= model_class.human_attribute_name(:settlement_date)
+  %dd= @settlement_ledger.settlement_date
+  %dt= model_class.human_attribute_name(:settlement_note)
+  %dd= @settlement_ledger.settlement_note
+
+.page-footer
+  = link_to t("精 算"), edit_for_settle_settlement_ledger_path, :class => 'btn btn-primary'
+  = link_to t('.edit', :default => t("helpers.links.edit")),
+               edit_settlement_ledger_path, :class => 'btn btn-primary'
+  = link_to t('.cancel', :default => t("helpers.links.cancel")),
+              settlement_ledgers_path, :class => 'btn btn-default'

@@ -4,8 +4,8 @@ Claude::Application.routes.draw do
     get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
     put 'users' => 'devise/registrations#update', :as => 'user_registration'
   end
-  resources :users, except: [:show]
-  resources :settlement_ledgers, except: [:show] do
+  resources :users
+  resources :settlement_ledgers do
     collection do
       get :download
     end
@@ -55,7 +55,7 @@ Claude::Application.routes.draw do
   #       get 'recent', on: :collection
   #     end
   #   end
-  
+
   # Example resource route with concerns:
   #   concern :toggleable do
   #     post 'toggle'
