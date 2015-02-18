@@ -1,3 +1,11 @@
-td.text-right {
-	text-align: right;
+body.settlement_ledgers {
+	td.text-right {
+		text-align: right;
+	}
+	table.table {
+		font-size: 13px;
+	}
+	table .btn-sm {
+		padding: 1px 3px;
+	}
 }
