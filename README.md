@@ -1,6 +1,7 @@
 # Claude
 
 [![Build Status](https://travis-ci.org/WIT-SYS2/claude.png?branch=master)](https://travis-ci.org/WIT-SYS2/claude)
+[![Coverage Status](https://coveralls.io/repos/WIT-SYS2/claude/badge.svg?branch=master)](https://coveralls.io/r/WIT-SYS2/claude?branch=master)
 
 ## About
 
