@@ -1,5 +1,5 @@
 - model_class = SettlementLedger
-%table{class: 'table table-hover'}
+%table.table.table-hover
   %thead
     %tr
       %th= model_class.human_attribute_name(:ledger_number)
@@ -11,6 +11,7 @@
       %th= model_class.human_attribute_name(:settlement_date)
       %th= model_class.human_attribute_name(:settlement_note)
       %th= t '.actions', :default => t("helpers.actions")
+      %th= '精算書ダウンロード'
   %tbody
     - @settlement_ledgers.each do |settlement_ledger|
       %tr{class: settlement_ledger.deleted? ? 'deleted' : ''}
@@ -35,5 +36,10 @@
                           :method => :delete,
                           :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                           :class => 'btn btn-sm btn-danger'
+        %td
+          - if settlement_ledger.file_name.present?
+            = link_to t('.settlement_ledger_number_download', :default => t("helpers.links.download")),
+                      settlement_ledger_number_download_settlement_ledger_path(settlement_ledger),
+                      :class => 'btn btn-sm btn-primary'
 = paginate @settlement_ledgers, remote: true
 

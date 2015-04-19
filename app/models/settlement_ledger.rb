@@ -20,6 +20,7 @@
 
 class SettlementLedger < ActiveRecord::Base
   EXCEL_HEADER = %w[台帳No 内容 備考 精算金額 申請日 申請者 精算日 備考 精算完了 削除]
+  CONTENT_VALUE = %w[営業経費精算書 通勤手当支給申請書 出張精算書 その他]
 
   attr_accessor :completed
 
@@ -62,6 +63,15 @@ class SettlementLedger < ActiveRecord::Base
       completed? ? '○' : '×',
       deleted? ? '○' : '×'
     ]
+  end
+
+  #excelファイルの保存先
+  def file_path
+    "public/data/#{id}.xls"
+  end
+
+  def file_download_path
+    "public/data/download/#{id}.xls"
   end
 
   private

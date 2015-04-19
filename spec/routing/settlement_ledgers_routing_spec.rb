@@ -37,6 +37,10 @@ describe 'routes for SettlementLedger', type: :routing do
     expect(delete('/settlement_ledgers/5')).to route_to('settlement_ledgers#destroy', id: '5')
   end
 
+  it 'routes /settlement_ledgers/5/settlement_ledger_number_download to the settlement_ledgers controller' do
+    expect(get('/settlement_ledgers/5/settlement_ledger_number_download')).to route_to('settlement_ledgers#settlement_ledger_number_download', id: '5')
+  end
+
   it 'routes /settlement_ledgers/10/edit_for_settle to the settlement_ledgers controller' do
     expect(get('/settlement_ledgers/10/edit_for_settle')).to route_to('settlement_ledgers#edit_for_settle', id: '10')
   end
