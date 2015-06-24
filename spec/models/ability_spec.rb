@@ -1,4 +1,4 @@
-require 'spec_helper'
+require '../spec_helper'
 require 'cancan/matchers'
 
 describe Ability do
@@ -17,6 +17,7 @@ describe Ability do
     it { should be_able_to(:manage, User) }
     it { should be_able_to(:read, SettlementLedger) }
     it { should be_able_to(:create, SettlementLedger) }
+    it { should be_able_to(:search, SettlementLedger) }
     it { should_not be_able_to(:manage, SettlementLedger) }
 
     context '自身が登録した申請の場合' do
@@ -42,6 +43,7 @@ describe Ability do
     
     it { should_not be_able_to(:manage, User) }
     it { should be_able_to(:manage, SettlementLedger) }
+    it { should be_able_to(:search, SettlementLedger) }
 
     context '自身が登録した申請の場合' do
       let(:target_settlement) { FactoryGirl.create(:settlement_ledger, applicant_user_id: user.id) }
@@ -67,6 +69,7 @@ describe Ability do
     it { should_not be_able_to(:manage, User) }
     it { should be_able_to(:read, SettlementLedger) }
     it { should be_able_to(:create, SettlementLedger) }
+    it { should be_able_to(:search, SettlementLedger) }
     it { should_not be_able_to(:manage, SettlementLedger) }
 
     context '自身が登録した申請の場合' do

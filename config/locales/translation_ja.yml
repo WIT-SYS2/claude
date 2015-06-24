@@ -32,6 +32,7 @@ ja:
         settlement_note: 備考  #g
         completed_at: 完了日付  #g
         deleted_at: 削除日時  #g
+        request: 要望 #g
 
       user:
         confirmation_sent_at: confirmation_sent_at  #g

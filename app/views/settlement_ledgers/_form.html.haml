@@ -2,7 +2,9 @@
   = f.input :content, label: '内容', hint: '「出張精算書」「営業経費精算書」など', input_html: { maxlength: 40 }
   = f.input :note, label: '備考', input_html: { maxlength: 200 }
   = f.input :price, label: '金額'
+  = f.input :request, as: :text, label: '要望', input_html: {maxlength: 100}
   = f.input :application_date, label: '申請日付', as: :string, input_html: { class: 'datepicker', value: Date.today }
   = f.button :submit, :class => 'btn btn-primary', data: { confirm: '精算申請を登録します。よろしいですか？' }
   = link_to t('.cancel', :default => t("helpers.links.cancel")),
               settlement_ledgers_path, :class => 'btn btn-default'
+

@@ -14,7 +14,10 @@
 = link_to t('.new', :default => t("helpers.links.new")),
             new_settlement_ledger_path,
             :class => 'btn btn-primary'
-- if can? :download, SettlementLedger
+
+-if can? :download, SettlementLedger
   = link_to t('.download', :default => t("helpers.links.download")),
               download_settlement_ledgers_path,
               :class => 'btn btn-primary'
+
+

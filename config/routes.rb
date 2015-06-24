@@ -8,6 +8,7 @@ Claude::Application.routes.draw do
   resources :settlement_ledgers, except: [:show] do
     collection do
       get :download
+      get :search
     end
     member do
       get :edit_for_settle

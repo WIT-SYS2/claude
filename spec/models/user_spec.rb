@@ -57,7 +57,7 @@ describe User do
       it '不正な形式の場合は無効であること' do
         expect(User.new(email: 'sample@example')).to have(1).error_on(:email)
       end
-
+      
       it '正しい形式の場合は有効であること' do
         expect(User.new(email: 'sample@example.com')).to have(:no).error_on(:email)
       end

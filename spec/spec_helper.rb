@@ -3,6 +3,7 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'factory_girl_rails'
+require 'devise'
 
 require 'coveralls'
 Coveralls.wear!('rails')
@@ -55,4 +56,10 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+
+  # deviseのテストヘルパーをロードする
+  config.include Devise::TestHelpers, :type => :controller
+  # 作成したログインモジュールを追加する
+  config.include ControllerMacros, :type => :controller
+  
 end

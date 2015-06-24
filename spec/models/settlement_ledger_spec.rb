@@ -18,7 +18,7 @@
 #  updated_at          :datetime
 #
 
-require 'spec_helper'
+require '../spec_helper'
 
 describe SettlementLedger do
   describe 'バリデーション' do
@@ -109,6 +109,37 @@ describe SettlementLedger do
       it '小数の場合は無効であること' do
         expect(SettlementLedger.new(price: 100.5)).to have(1).error_on(:price)
       end
+    end
+
+    describe 'request' do
+      it 'nilの場合は有効であること' do
+        expect(SettlementLedger.new(request: nil)).to have(:no).error_on(:request)
+      end
+
+      it '末尾が。の場合は有効であること' do
+        expect(SettlementLedger.new(request: '。')).to have(:no).error_on(:request)
+      end
+
+      it '末尾に。がない場合は無効であること' do
+        expect(SettlementLedger.new(request: '1')).to have(1).error_on(:request)
+      end
+
+      it '100文字の場合は有効であること' do
+        expect(SettlementLedger.new(request: '1' * 99 + '。')).to have(:no).error_on(:request)
+      end
+
+      it '101文字の場合は無効であること' do
+        expect(SettlementLedger.new(request: '1' * 100 + '。')).to have(1).error_on(:request)
+      end
+
+      it '3行の場合は有効であること' do
+        expect(SettlementLedger.new(request: "1\n1\n1。")).to have(:no).error_on(:request)
+      end
+
+      it '4行の場合は無効であること' do
+        expect(SettlementLedger.new(request: "1\n1\n1\n1。")).to have(1).error_on(:request)
+      end
+
     end
 
     describe 'application_date' do

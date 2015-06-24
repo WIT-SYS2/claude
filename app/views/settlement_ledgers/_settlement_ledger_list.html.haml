@@ -1,3 +1,7 @@
+-unless params[:target] == "all"
+  =form_tag search_settlement_ledgers_url, :method => :get do
+    =text_field_tag("content", @content)
+    =submit_tag("検索")
 - model_class = SettlementLedger
 %table{class: 'table table-hover'}
   %thead
@@ -6,6 +10,7 @@
       %th= model_class.human_attribute_name(:content)
       %th= model_class.human_attribute_name(:note)
       %th= model_class.human_attribute_name(:price)
+      %th= model_class.human_attribute_name(:request)
       %th= model_class.human_attribute_name(:application_date)
       %th= model_class.human_attribute_name(:applicant_user_name)
       %th= model_class.human_attribute_name(:settlement_date)
@@ -18,6 +23,7 @@
         %td= settlement_ledger.content
         %td= settlement_ledger.note
         %td.text-right= number_with_delimiter(settlement_ledger.price)
+        %td= settlement_ledger.request
         %td= settlement_ledger.application_date
         %td= settlement_ledger.applicant_user_name
         %td= settlement_ledger.settlement_date

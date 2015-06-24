@@ -19,6 +19,7 @@
 #
 
 class SettlementLedger < ActiveRecord::Base
+
   EXCEL_HEADER = %w[台帳No 内容 備考 精算金額 申請日 申請者 精算日 備考 精算完了 削除]
 
   attr_accessor :completed
@@ -33,11 +34,13 @@ class SettlementLedger < ActiveRecord::Base
   validates :applicant_user_id, presence: true
   validates :applicant_user_name, presence: true, length: { maximum: 40 }
   validates :settlement_note, length: { maximum: 40 }
+  validates :request, length: {maximum: 100}, format: {with: /\A(.*\n){,2}.*。\Z/ , allow_blank: true}
 
   scope :completed, -> { where('completed_at IS NOT NULL') }
   scope :not_completed, -> { where('completed_at IS NULL') }
   scope :deleted, -> { where('deleted_at IS NOT NULL') }
   scope :not_deleted, -> { where('deleted_at IS NULL') }
+  scope :like_content, ->(content){ where("content like ?", "%#{content}%") }
 
   before_validation :assign_ledger_number, on: :create
 

@@ -105,6 +105,23 @@ class SettlementLedgersController < ApplicationController
     end
   end
 
+  def search
+    params[:page] ||= 1
+    @settlement_ledgers = SettlementLedger.order('ledger_number DESC')
+    if params[:target] == "all"
+      @settlement_ledgers = @settlement_ledgers.not_completed.not_deleted
+    end
+    #respond_to do |format|
+      #format.html
+      #format.js if request.xhr?
+    #end
+    content = params[:content]
+    @settlement_ledgers = @settlement_ledgers.like_content(content).all if content.present?
+    @settlement_ledgers = @settlement_ledgers.page(params[:page])
+    render :index
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_settlement_ledger
@@ -113,6 +130,6 @@ class SettlementLedgersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def settlement_ledger_params
-      params.require(:settlement_ledger).permit(:content, :note, :price, :application_date, :settlement_date, :settlement_note, :completed_at)
+      params.require(:settlement_ledger).permit(:content, :note, :price, :request, :application_date, :settlement_date, :settlement_note, :completed_at)
     end
 end
