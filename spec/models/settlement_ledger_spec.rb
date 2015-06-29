@@ -111,6 +111,48 @@ describe SettlementLedger do
       end
     end
 
+  describe 'demand' do
+    it 'nilの場合は有効であること' do
+      expect(SettlementLedger.new(demand: nil)).to have(0).error_on(:demand)
+    end
+    
+    it '空文字の場合は有効であること' do
+      expect(SettlementLedger.new(demand: '')).to have(0).error_on(:demand)
+    end
+
+    it '1文字の場合は有効であること' do
+      expect(SettlementLedger.new(demand: 'A。')).to have(0).error_on(:demand)
+    end
+    
+    it '100文字の場合は有効であること' do
+      expect(SettlementLedger.new(demand: ('A'*99) + '。')).to have(0).error_on(:demand)
+    end
+    
+    it '101文字の場合は無効であること' do
+      expect(SettlementLedger.new(demand: ('A'*100) + '。')).to have(1).error_on(:demand)
+    end
+    
+    it '1行で最後が。の場合は有効であること' do
+      expect(SettlementLedger.new(demand: 'A。')).to have(0).error_on(:demand)
+    end
+
+    it '3行で最後が。の場合は有効であること' do
+      expect(SettlementLedger.new(demand: "A\nA\nA。")).to have(0).error_on(:demand)
+    end
+    it '4行で最後が。の場合は無効であること' do
+      expect(SettlementLedger.new(demand: "A\nA\nA\nA。")).to have(1).error_on(:demand)
+    end
+    it '1行で最後が。でない場合は無効であること' do
+      expect(SettlementLedger.new(demand: 'A')).to have(1).error_on(:demand)
+    end
+    it '3行で最後が。でない場合は無効であること' do
+      expect(SettlementLedger.new(demand: "A\nA\nA")).to have(1).error_on(:demand)
+    end
+    it '4行で最後が。でない場合は無効であること' do
+      expect(SettlementLedger.new(demand: "A\nA\nA\nA")).to have(1).error_on(:demand)
+    end
+  end
+
     describe 'application_date' do
       it 'nilの場合は無効であること' do
         expect(SettlementLedger.new(application_date: nil)).to have(1).error_on(:application_date)
@@ -290,4 +332,49 @@ describe SettlementLedger do
       it { expect { ledger.send(:assign_ledger_number) }.to change(ledger, :ledger_number).to("#{Rails.configuration.ledger_number_prefix}011") }
     end
   end
+=begin
+  describe "スコープ" do
+    before{
+      FactoryGirl.create(:settlement_ledger,
+                      ledger_number: 'AAA-00001',
+                      completed_at: nil,
+                      deleted_at: nil,
+                      content: 'test1',
+                      note: 'test1',
+                      price: 500,
+                      demand: 'test1。',
+                      application_date: 3.days.since.to_date,
+                      applicant_user_name: 'システム管理者'
+      )
+      FactoryGirl.create(:settlement_ledger,
+                      ledger_number: 'AAA-00002',
+                      completed_at: 3.days.since.to_date,
+                      deleted_at: 2.days.since.to_date ,
+                      content: 'test1',
+                      note: 'test2',
+                      price: 750,
+                      demand: 'test2。',
+                      application_date: 1.days.since.to_date,
+                      applicant_user_name: '利用者1'
+      )
+      FactoryGirl.create(:settlement_ledger,
+                      ledger_number: 'AAA-00003',
+                      completed_at: nil,
+                      deleted_at: 1.days.since.to_date,
+                      content: 'test2',
+                      note: 'test3',
+                      price: 1000,
+                      demand: 'test1。',
+                      application_date: 3.days.since.to_date,
+                      applicant_user_name: '利用者2'
+      )
+    }
+
+    describe 'completed' do
+      it{ expect(SettlementLedger.completed.all).to have(1)}
+    end
+
+
+  end
+=end
 end

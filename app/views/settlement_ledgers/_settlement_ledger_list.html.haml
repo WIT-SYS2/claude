@@ -1,3 +1,28 @@
+-if params[:target] == "all"
+  =form_tag settlement_ledgers_url, method: :get do
+    =label_tag("　　内容：")
+    =text_field_tag("content" , @content)
+    %br
+    =label_tag("　　備考：")
+    =text_field_tag("note", @note)
+    %br
+    =label_tag("精算金額：")
+    =text_field_tag("under_price", @under_price, size: 7)
+    ～
+    =text_field_tag("over_price", @over_price, size: 8)
+    %br
+    =label_tag("　　要望：")
+    =text_field_tag("demand", @demand)
+    %br
+    =label_tag("　申請日：")
+    =text_field_tag("application_date", @application_date)
+    %br
+    =label_tag("　申請者：")
+    =text_field_tag("applicant_user_name", @applicant_user_name)
+    =submit_tag("検索")
+    %br
+    %br
+
 - model_class = SettlementLedger
 %table{class: 'table table-hover'}
   %thead
@@ -6,6 +31,7 @@
       %th= model_class.human_attribute_name(:content)
       %th= model_class.human_attribute_name(:note)
       %th= model_class.human_attribute_name(:price)
+      %th= model_class.human_attribute_name(:demand)
       %th= model_class.human_attribute_name(:application_date)
       %th= model_class.human_attribute_name(:applicant_user_name)
       %th= model_class.human_attribute_name(:settlement_date)
@@ -18,6 +44,7 @@
         %td= settlement_ledger.content
         %td= settlement_ledger.note
         %td.text-right= number_with_delimiter(settlement_ledger.price)
+        %td= settlement_ledger.demand
         %td= settlement_ledger.application_date
         %td= settlement_ledger.applicant_user_name
         %td= settlement_ledger.settlement_date

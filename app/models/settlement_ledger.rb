@@ -16,6 +16,7 @@
 #  deleted_at          :datetime
 #  created_at          :datetime
 #  updated_at          :datetime
+#  demand              :string(100)
 #
 
 class SettlementLedger < ActiveRecord::Base
@@ -29,6 +30,7 @@ class SettlementLedger < ActiveRecord::Base
   validates :content, presence: true, length: { maximum: 40 }
   validates :note, presence: true, length: { maximum: 200 }
   validates :price, presence: true,  numericality: { only_integer: true, greater_than: 0, less_than: 1000000, allow_nil: true}
+  validates :demand, length: {maximum: 100}, format: {with: /\A(.*\n){,2}.+。\Z/ , allow_blank: true}
   validates :application_date, presence: true
   validates :applicant_user_id, presence: true
   validates :applicant_user_name, presence: true, length: { maximum: 40 }
@@ -38,6 +40,13 @@ class SettlementLedger < ActiveRecord::Base
   scope :not_completed, -> { where('completed_at IS NULL') }
   scope :deleted, -> { where('deleted_at IS NOT NULL') }
   scope :not_deleted, -> { where('deleted_at IS NULL') }
+  scope :like_content, ->(content) {where("content like ?", "%#{content}%")}
+  scope :like_note, ->(note) {where("note like ?", "%#{note}%")}
+  scope :over_price, ->(over_price) {where("price <= ?", "#{over_price}")}
+  scope :under_price, ->(under_price) {where("price >= ?", "#{under_price}")}
+  scope :like_demand, ->(demand) {where("demand like ?", "%#{demand}%")}
+  scope :like_application_date, ->(application_date) {where("application_date like ?", "%#{application_date}%")}
+  scope :like_applicant_user_name, ->(applicant_user_name) {where("applicant_user_name like ?", "%#{applicant_user_name}%")}
 
   before_validation :assign_ledger_number, on: :create
 

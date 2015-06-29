@@ -5,6 +5,7 @@ require 'rspec/rails'
 require 'factory_girl_rails'
 
 require 'coveralls'
+require 'devise'
 Coveralls.wear!('rails')
 
 # Requires supporting ruby files with custom matchers and macros, etc,
@@ -31,6 +32,12 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+
+  config.infer_spec_type_from_file_location!
+  config.include Devise::TestHelpers, type: :controller
+  #config.include ControllerMacros, type: :controller
+  config.include ControllerMacros, type: :controller
+
 
   config.before :suite do
     DatabaseRewinder.clean_all

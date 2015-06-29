@@ -25,6 +25,7 @@ ja:
         content: 内容  #g
         note: 備考  #g
         price: 精算金額  #g
+        demand: 要望 #g
         application_date: 申請日付  #g
         applicant_user_id: 申請者  #g
         applicant_user_name: 申請者  #g
