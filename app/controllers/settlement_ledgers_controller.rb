@@ -59,6 +59,10 @@ class SettlementLedgersController < ApplicationController
 
   # GET /settlement_ledgers/1/edit
   def edit
+    if @settlement_ledger.deleted? or @settlement_ledger.completed?
+      redirect_to settlement_ledgers_url
+      return
+    end
   end
 
   # POST /settlement_ledgers
@@ -82,6 +86,11 @@ class SettlementLedgersController < ApplicationController
   # PATCH/PUT /settlement_ledgers/1
   # PATCH/PUT /settlement_ledgers/1.json
   def update
+    if @settlement_ledger.deleted? or @settlement_ledger.completed?
+      redirect_to settlement_ledgers_url
+      return
+    end
+
     respond_to do |format|
       if @settlement_ledger.update(settlement_ledger_params)
         format.html { redirect_to settlement_ledgers_url, notice: '精算依頼を更新しました。' }
@@ -96,10 +105,10 @@ class SettlementLedgersController < ApplicationController
   # DELETE /settlement_ledgers/1
   # DELETE /settlement_ledgers/1.json
   def destroy
-    #if @settlement_ledger.deleted_at or @settlement_ledger.completed_at
-    #  redirect_to settlement_ledgers_url
-    #  return
-    #end
+    if @settlement_ledger.deleted? or @settlement_ledger.completed?
+      redirect_to settlement_ledgers_url
+      return
+    end
 
     @settlement_ledger.update_attributes!(deleted_at: DateTime.now)
     respond_to do |format|
@@ -124,15 +133,18 @@ class SettlementLedgersController < ApplicationController
   end
 
   def edit_for_settle
-    #redirect_to settlement_ledgers_url if @settlement_ledger.completed_at
+    if @settlement_ledger.deleted? or @settlement_ledger.completed?
+      redirect_to settlement_ledgers_url
+      return
+    end
   end
 
   def settle
     #削除済みのものを登録しようとしたら一覧ページにリダイレクト
-    #if @settlement_ledger.deleted?# or @settlement_ledger.completed?
-    #  redirect_to settlement_ledgers_url
-    #  return
-    #end
+    if @settlement_ledger.deleted? or @settlement_ledger.completed?
+      redirect_to settlement_ledgers_url
+      return
+    end
     if params[:settlement_ledger].delete(:completed) == "1"
       params[:settlement_ledger][:completed_at] = DateTime.now
     else
@@ -143,7 +155,8 @@ class SettlementLedgersController < ApplicationController
         format.html { redirect_to settlement_ledgers_url, notice: '精算依頼を更新しました。' }
         format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
+        #format.html { render action: 'edit' }
+        format.html { render action: :edit_for_settle}
         format.json { render json: @settlement_ledger.errors, status: :unprocessable_entity }
       end
     end
