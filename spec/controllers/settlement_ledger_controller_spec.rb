@@ -17,11 +17,11 @@ let(:settlement_ledger) { create_list(:settlement_ledger, 4,
 #削除済みのデータ作成 id: 966～968
 let(:settlement_ledger_deleted) { create_list(:settlement_ledger, 3,
                                                                 content: "削除済",
-                                                                deleted_at: DateTime.now )}
+                                                                deleted_at: DateTime.yesterday )}
 #精算済みのデータ作成 id: 969～971
 let(:settlement_ledger_completed) { create_list(:settlement_ledger, 3,
                                                                   content: "精算済",
-                                                                  completed_at: DateTime.now )}
+                                                                  completed_at: DateTime.yesterday )}
 
   describe "GET index" do
 
@@ -181,15 +181,12 @@ let(:settlement_ledger_completed) { create_list(:settlement_ledger, 3,
           end
 
           it "ステータスコード302が返ってくること" do
-            pending '未実装'
             expect(response).to be_redirect
           end
           it "一覧ページにリダイレクトされること" do
-            pending '未実装'
             expect(response).to redirect_to(settlement_ledgers_path)
           end
           it "選択された申請は既に削除されています。というフラッシュメッセージが設定されること" do
-            pending '未実装'
             expect(flash[:notice]).to eq('選択された申請は既に削除されています。')
           end
         end
@@ -200,35 +197,28 @@ let(:settlement_ledger_completed) { create_list(:settlement_ledger, 3,
           end
 
           it "ステータスコード302が返ってくること" do
-            pending '未実装'
             expect(response).to be_redirect
           end
           it "一覧ページにリダイレクトされること" do
-            pending '未実装'
             expect(response).to redirect_to(settlement_ledgers_path)
           end
           it "選択された申請は既に精算が完了されています。というフラッシュメッセージが設定されること" do
-            pending '未実装'
             expect(flash[:notice]).to eq('選択された申請は既に精算が完了されています。')
           end
         end
 
         context "作成されていない申請を選択した場合" do
           before do
-            pending '未実装'
             get :edit, id: -1
           end
 
           it "ステータスコード302が返ってくること" do
-            pending '未実装'
             expect(response).to be_redirect
           end
           it "一覧ページにリダイレクトされること" do
-            pending '未実装'
             expect(response).to redirect_to(settlement_ledgers_path)
           end
           it "選択された申請は編集できません。というフラッシュメッセージが設定されること" do
-            pending '未実装'
             expect(flash[:notice]).to eq('選択された申請は編集できません。')
           end
         end
@@ -370,7 +360,6 @@ let(:settlement_ledger_completed) { create_list(:settlement_ledger, 3,
           end
 
           it"申請の更新が行われていないこと" do 
-            pending '未実装'
             expect(SettlementLedger.find(settlement_ledger_deleted.first.id).content).not_to eq("テスト")
           end
           it "ステータスコード302が返ってくること" do
@@ -380,7 +369,6 @@ let(:settlement_ledger_completed) { create_list(:settlement_ledger, 3,
             expect(response).to redirect_to(settlement_ledgers_path)
           end
           it "選択された申請は既に削除されています。というフラッシュメッセージが設定されること" do
-            pending '未実装'
             expect(flash[:notice]).to eq('選択された申請は既に削除されています。')
           end
         end
@@ -391,7 +379,6 @@ let(:settlement_ledger_completed) { create_list(:settlement_ledger, 3,
           end
 
           it"申請の更新が行われていないこと" do 
-            pending '未実装'
             expect(SettlementLedger.find(settlement_ledger_completed.first.id).content).not_to eq("テスト")
           end
           it "ステータスコード302が返ってくること" do
@@ -401,29 +388,22 @@ let(:settlement_ledger_completed) { create_list(:settlement_ledger, 3,
             expect(response).to redirect_to(settlement_ledgers_path)
           end
           it "選択された申請は既に精算が完了されています。というフラッシュメッセージが設定されること" do
-            pending '未実装'
             expect(flash[:notice]).to eq('選択された申請は既に精算が完了されています。')
           end
         end
 
         context "作成されていない申請を選択した場合" do
           before do
-            pending '未実装'
             put :update, id: -1, settlement_ledger:{ content: "テスト" }
           end
 
-          it"申請の更新が行われていないこと" do 
-            pending '未実装'
-            expect(SettlementLedger.find(-1).content).not_to eq("テスト")
-          end
           it "ステータスコード302が返ってくること" do
             expect(response).to be_redirect
           end
           it "一覧ページにリダイレクトされること" do 
             expect(response).to redirect_to(settlement_ledgers_path)
           end
-          it "選択された申請は作成されていません。というフラッシュメッセージが設定されること" do
-            pending '未実装'
+          it "選択された申請は編集できません。というフラッシュメッセージが設定されること" do
             expect(flash[:notice]).to eq('選択された申請は編集できません。')
           end
         end
@@ -463,7 +443,7 @@ let(:settlement_ledger_completed) { create_list(:settlement_ledger, 3,
         end
 
         it "削除処理が行われていること" do
-          expect(settlement_ledger.first.deleted_at).not_to eq(nil) 
+          expect(SettlementLedger.first.deleted_at).not_to eq(nil) 
         end
         it "ステータスコード302が返ってくること" do
           expect(response).to be_redirect
@@ -481,15 +461,10 @@ let(:settlement_ledger_completed) { create_list(:settlement_ledger, 3,
             delete :destroy, id: settlement_ledger_deleted.first.id
           end
 
-          it "申請の削除が行われていないこと" do
-            pending '未実装'
-            expect(settlement_ledger_deleted.first.deleted_at).to eq(nil) 
-          end
           it "一覧ページにリダイレクトされること" do
             expect(response).to redirect_to(settlement_ledgers_path)
           end
           it "選択した申請は既に削除されています。というフラッシュメッセージが設定されること" do
-            pending '未実装'
             expect(flash[:notice]).to eq('選択された申請は既に削除されています。')
           end
         end
@@ -501,35 +476,29 @@ let(:settlement_ledger_completed) { create_list(:settlement_ledger, 3,
           end
 
           it "申請の削除が行われていないこと" do
-            pending '未実装'
-            expect(settlement_ledger_completed.first.completed_at).to eq(nil) 
+            expect(settlement_ledger_completed.first.deleted_at).to eq(nil) 
           end
           it "一覧ページにリダイレクトされること" do
             expect(response).to redirect_to(settlement_ledgers_path)
           end
           it "選択した申請は既に精算が完了されています。というフラッシュメッセージが設定されること" do
-            pending '未実装'
             expect(flash[:notice]).to eq('選択された申請は既に精算が完了されています。')
           end
         end
 
         context "作成されていない申請を選択した場合" do
           before do
-            pending '未実装'
             delete :destroy, id: -1
           end
 
           it "申請の削除が行われていないこと" do
-            pending '未実装'
             expect(settlement_ledger.first.deleted_at).to eq(nil) 
           end
           it "一覧ページにリダイレクトされること" do
-            pending '未実装'
             expect(response).to redirect_to(settlement_ledgers_path)
           end
-          it "選択した申請は作成されていません。というフラッシュメッセージが設定されること" do
-            pending '未実装'
-            expect(flash[:notice]).to eq('選択された申請は既に精算が完了されています。')
+          it "選択した申請は編集できません。というフラッシュメッセージが設定されること" do
+            expect(flash[:notice]).to eq('選択された申請は編集できません。')
           end
         end
 
@@ -620,15 +589,12 @@ let(:settlement_ledger_completed) { create_list(:settlement_ledger, 3,
           end
 
           it "ステータスコード302が返ってくること" do
-            pending '未実装'
             expect(response).to be_redirect
           end
           it "一覧ページにリダイレクトされること" do
-            pending '未実装'
             expect(response).to redirect_to(settlement_ledgers_path)
           end
           it "選択された申請は既に削除されています。というフラッシュメッセージが設定されること" do
-            pending '未実装'
             expect(flash[:notice]).to eq('選択された申請は既に削除されています。')
           end
         end
@@ -639,35 +605,28 @@ let(:settlement_ledger_completed) { create_list(:settlement_ledger, 3,
           end
 
           it "ステータスコード302が返ってくること" do
-            pending '未実装'
             expect(response).to be_redirect
           end
           it "一覧ページにリダイレクトされること" do
-            pending '未実装'
             expect(response).to redirect_to(settlement_ledgers_path)
           end
           it "選択された申請は既に精算が完了されています。というフラッシュメッセージが設定されること" do
-            pending '未実装'
             expect(flash[:notice]).to eq('選択された申請は既に精算が完了されています。')
           end
         end
 
         context "作成されていない申請を選択した場合" do
           before do
-            pending '未実装'
             get :edit_for_settle, id: -1
           end
 
           it "ステータスコード302が返ってくること" do
-            pending '未実装'
             expect(response).to be_redirect
           end
           it "一覧ページにリダイレクトされること" do
-            pending '未実装'
             expect(response).to redirect_to(settlement_ledgers_path)
           end
           it "選択された申請は精算できません。というフラッシュメッセージが設定されること" do
-            pending '未実装'
             expect(flash[:notice]).to eq('選択された申請は精算できません。')
           end
         end
@@ -716,10 +675,10 @@ let(:settlement_ledger_completed) { create_list(:settlement_ledger, 3,
             expect(response).to redirect_to(settlement_ledgers_path)
           end
           it "精算完了処理が行われていること" do
-            expect(SettlementLedger.find(settlement_ledger.first.id).completed_at).not_to eq(nil)
+            expect(SettlementLedger.first.completed_at).not_to eq(nil)
           end
           it "精算処理が行われていること" do
-            expect(SettlementLedger.find(settlement_ledger.first.id).settlement_date).to eq(Date.today)
+            expect(SettlementLedger.first.settlement_date).not_to eq(nil)
           end
           it "精算依頼を更新しました。というフラッシュメッセージが設定されること。" do
               expect(flash[:notice]).to eq('精算依頼を更新しました。')
@@ -739,10 +698,10 @@ let(:settlement_ledger_completed) { create_list(:settlement_ledger, 3,
             expect(response).to redirect_to(settlement_ledgers_path)
           end
           it "精算完了処理が行われていないこと" do
-            expect(SettlementLedger.find(settlement_ledger.first.id).completed_at).to eq(nil)
+            expect(SettlementLedger.first.completed_at).to eq(nil)
           end
           it "精算処理が行われていること" do
-            expect(SettlementLedger.find(settlement_ledger.first.id).settlement_date).to eq(Date.today)
+            expect(SettlementLedger.first.settlement_date).to eq(Date.today)
           end
           it "精算依頼を更新しました。というフラッシュメッセージが設定されること。" do
             expect(flash[:notice]).to eq('精算依頼を更新しました。')
@@ -760,7 +719,6 @@ let(:settlement_ledger_completed) { create_list(:settlement_ledger, 3,
           end
 
           it "精算処理が行われていないこと" do
-            pending '未実装'
             expect(SettlementLedger.find(settlement_ledger_deleted.first.id).settlement_date).not_to eq(Date.today)
           end
           it "ステータスコード302が返ってくること" do
@@ -770,7 +728,6 @@ let(:settlement_ledger_completed) { create_list(:settlement_ledger, 3,
             expect(response).to redirect_to(settlement_ledgers_path)
           end
           it "選択した申請は既に削除されています。というフラッシュメッセージが設定されること" do
-            pending '未実装'
             expect(flash[:notice]).to eq('選択された申請は既に削除されています。')
           end
         end
@@ -782,7 +739,6 @@ let(:settlement_ledger_completed) { create_list(:settlement_ledger, 3,
           end
 
           it "精算処理が行われていないこと" do
-            pending '未実装'
             expect(SettlementLedger.find(settlement_ledger_completed.first.id).settlement_date).not_to eq(Date.today)
           end
           it "ステータスコード302が返ってくること" do
@@ -792,31 +748,24 @@ let(:settlement_ledger_completed) { create_list(:settlement_ledger, 3,
             expect(response).to redirect_to(settlement_ledgers_path)
           end
           it "選択した申請は既に精算が完了されています。というフラッシュメッセージが設定されること" do
-            pending '未実装'
             expect(flash[:notice]).to eq('選択された申請は既に精算が完了されています。')
           end
         end
 
         context "存在しない申請を選択した場合" do
           before do
-            pending '未実装'
             put :settle, id: -1, settlement_ledger:{ settlement_date: Date.today,
                                                      settlement_note: "test" }
           end
 
-          it "精算処理が行われていないこと" do
-            pending '未実装'
-            expect(SettlementLedger.find(-1).settlement_date).not_to eq(Date.today)
-          end
           it "ステータスコード302が返ってくること" do
             expect(response).to be_redirect
           end
           it "一覧ページにリダイレクトされること" do
             expect(response).to redirect_to(settlement_ledgers_path)
           end
-          it "選択した申請は作成されていません。というフラッシュメッセージが設定されること" do
-            pending '未実装'
-            expect(flash[:notice]).to eq('選択された申請は作成されていません。')
+          it "選択した申請は精算できません。というフラッシュメッセージが設定されること" do
+            expect(flash[:notice]).to eq('選択された申請は精算できません。')
           end
         end
 
@@ -869,6 +818,9 @@ let(:settlement_ledger_completed) { create_list(:settlement_ledger, 3,
       context "レコードが1件以上ある場合" do
         before do
           get :search
+          settlement_ledger
+          settlement_ledger_deleted
+          settlement_ledger_completed
         end
 
         it "ステータスコード200が返ってくること" do
@@ -935,14 +887,14 @@ let(:settlement_ledger_completed) { create_list(:settlement_ledger, 3,
 
         it "検索が行われていること" do
           get :search, content: ""
-          expect(assigns[:settlement_ledgers].count).to eq(SettlementLedger.count)
+          expect(assigns[:settlement_ledgers].count).to eq(settlement_ledger.count)
         end
       end
 
       context "検索条件が空でない場合" do
 
         it "検索が行われていること" do
-          get :search, content: "未精算"
+          get :search, content: "未削除"
           expect(assigns[:settlement_ledgers].count).to eq(settlement_ledger.count)
         end
       end
