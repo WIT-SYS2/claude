@@ -1,5 +1,6 @@
 -if params[:target] == "all"
   =form_tag settlement_ledgers_url, method: :get do
+    =hidden_field_tag :target, 'all'
     =label_tag("　　内容：")
     =text_field_tag("content" , @content)
     %br
