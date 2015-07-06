@@ -1,6 +1,6 @@
 #coding: utf-8
 
-require '../spec_helper'
+require 'spec_helper'
 
 RSpec.describe SettlementLedgersController, :type => :controller do
 #未精算のデータ作成 id: 962～965

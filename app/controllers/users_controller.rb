@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.with_deleted
- end
+  end
 
   def new
     @user = User.new

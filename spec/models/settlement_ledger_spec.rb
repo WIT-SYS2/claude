@@ -18,7 +18,7 @@
 #  updated_at          :datetime
 #
 
-require '../spec_helper'
+require 'spec_helper'
 
 describe SettlementLedger do
   describe 'バリデーション' do
