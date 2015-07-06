@@ -26,6 +26,17 @@ class SettlementLedgersController < ApplicationController
 
   # GET /settlement_ledgers/1/edit
   def edit
+    respond_to do |format|
+      if  @settlement_ledger.nil?
+        format.html{ redirect_to settlement_ledgers_url, notice: '選択された申請は編集できません。'}
+      elsif @settlement_ledger.deleted?
+        format.html{ redirect_to settlement_ledgers_url, notice: '選択された申請は既に削除されています。'}
+      elsif @settlement_ledger.completed?
+        format.html{ redirect_to settlement_ledgers_url, notice: '選択された申請は既に精算が完了されています。'}
+      else
+        format.html
+      end
+    end
   end
 
   # POST /settlement_ledgers
@@ -50,23 +61,34 @@ class SettlementLedgersController < ApplicationController
   # PATCH/PUT /settlement_ledgers/1.json
   def update
     respond_to do |format|
-      if @settlement_ledger.update(settlement_ledger_params)
-        format.html { redirect_to settlement_ledgers_url, notice: '精算依頼を更新しました。' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @settlement_ledger.errors, status: :unprocessable_entity }
+      
+      if  @settlement_ledger.nil?
+        format.html{ redirect_to settlement_ledgers_url, notice: '選択された申請は編集できません。'}
+      elsif @settlement_ledger.deleted?
+        format.html{ redirect_to settlement_ledgers_url, notice: '選択された申請は既に削除されています。'}
+      elsif @settlement_ledger.completed?
+        format.html{ redirect_to settlement_ledgers_url, notice: '選択された申請は既に精算が完了されています。'}
+      elsif @settlement_ledger.update(settlement_ledger_params)
+        format.html{ redirect_to settlement_ledgers_url, notice: '精算依頼を更新しました。'}
       end
+
     end
   end
 
   # DELETE /settlement_ledgers/1
   # DELETE /settlement_ledgers/1.json
   def destroy
-    @settlement_ledger.update_attributes!(deleted_at: DateTime.now)
     respond_to do |format|
-      format.html { redirect_to settlement_ledgers_url }
-      format.json { head :no_content }
+      if  @settlement_ledger.nil?
+        format.html{ redirect_to settlement_ledgers_url, notice: '選択された申請は編集できません。'}
+      elsif @settlement_ledger.deleted?
+        format.html{ redirect_to settlement_ledgers_url, notice: '選択された申請は既に削除されています。' }
+      elsif @settlement_ledger.completed?
+        format.html{ redirect_to settlement_ledgers_url, notice: '選択された申請は既に精算が完了されています。'}
+      else
+        @settlement_ledger.update_attributes!(deleted_at: DateTime.now)
+        format.html{ redirect_to settlement_ledgers_url }
+      end
     end
   end
 
@@ -86,35 +108,49 @@ class SettlementLedgersController < ApplicationController
   end
 
   def edit_for_settle
+    respond_to do |format|
+      if  @settlement_ledger.nil?
+        format.html{ redirect_to settlement_ledgers_url, notice: '選択された申請は精算できません。'}
+      elsif @settlement_ledger.deleted?
+        format.html{ redirect_to settlement_ledgers_url, notice: '選択された申請は既に削除されています。'}
+      elsif @settlement_ledger.completed?
+        format.html{ redirect_to settlement_ledgers_url, notice: '選択された申請は既に精算が完了されています。'}
+      else
+        format.html
+      end
+    end
   end
 
   def settle
-    if params[:settlement_ledger].delete(:completed) == "1"
-      params[:settlement_ledger][:completed_at] = DateTime.now
-    else
-      params[:settlement_ledger][:completed_at] = nil
-    end
     respond_to do |format|
-      if @settlement_ledger.update(settlement_ledger_params)
-        format.html { redirect_to settlement_ledgers_url, notice: '精算依頼を更新しました。' }
-        format.json { head :no_content }
+
+      if params[:settlement_ledger].delete(:completed) == "1"
+        params[:settlement_ledger][:completed_at] = DateTime.now
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @settlement_ledger.errors, status: :unprocessable_entity }
+        params[:settlement_ledger][:completed_at] = nil
+      end
+
+      if  @settlement_ledger.nil?
+        format.html{ redirect_to settlement_ledgers_url, notice: '選択された申請は精算できません。'}
+      elsif @settlement_ledger.deleted?
+        format.html{ redirect_to settlement_ledgers_url, notice: '選択された申請は既に削除されています。'}
+      elsif @settlement_ledger.completed?
+        format.html{ redirect_to settlement_ledgers_url, notice: '選択された申請は既に精算が完了されています。'}
+      elsif @settlement_ledger.update(settlement_ledger_params)
+        format.html { redirect_to settlement_ledgers_url, notice: '精算依頼を更新しました。' }
+      else
+        format.html { render action: 'edit_for_settle' }
       end
     end
+
   end
 
   def search
     params[:page] ||= 1
     @settlement_ledgers = SettlementLedger.order('ledger_number DESC')
-    if params[:target] == "all"
-      @settlement_ledgers = @settlement_ledgers.not_completed.not_deleted
+    unless params[:target] == "all"
+      @settlement_ledgers = @settlement_ledgers.not_deleted.not_completed
     end
-    #respond_to do |format|
-      #format.html
-      #format.js if request.xhr?
-    #end
     content = params[:content]
     @settlement_ledgers = @settlement_ledgers.like_content(content).all if content.present?
     @settlement_ledgers = @settlement_ledgers.page(params[:page])
@@ -125,11 +161,13 @@ class SettlementLedgersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_settlement_ledger
-      @settlement_ledger = SettlementLedger.find(params[:id])
+      @settlement_ledger = SettlementLedger.find_by_id(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def settlement_ledger_params
       params.require(:settlement_ledger).permit(:content, :note, :price, :request, :application_date, :settlement_date, :settlement_note, :completed_at)
+
+
     end
 end
