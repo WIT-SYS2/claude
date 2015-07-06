@@ -182,7 +182,7 @@ RSpec.describe SettlementLedgersController, :type => :controller do
 
             it "申請書を台帳Noの降順に並べる処理が行われていること" do
               expect(assigns[:settlement_ledgers].first.ledger_number).to eq(settle_default.last.ledger_number)
-              expect(assigns[:settlement_ledgers].last.ledger_number).to eq(settle_default.first.ledger_numbe)
+              expect(assigns[:settlement_ledgers].last.ledger_number).to eq(settle_default.first.ledger_number)
             end
 
             it "ステータスコードが200であること" do
@@ -316,7 +316,6 @@ RSpec.describe SettlementLedgersController, :type => :controller do
         settle_default
         settle_deleted
         settle_completed
-
       end
 
       context "存在する申請書を指定した場合" do
@@ -325,14 +324,13 @@ RSpec.describe SettlementLedgersController, :type => :controller do
             settlement_ledger = SettlementLedger.deleted.first
             get :edit, id: settlement_ledger.id
           end
+
           it "ステータスコードが302であること" do
-            #pending '未実装'
             expect(response.status).to eq(302)
           end
 
 
           it "精算申請一覧画面にリダイレクトされること" do
-            #pending '未実装'
             expect(response).to redirect_to(settlement_ledgers_url)
           end
         end
@@ -343,14 +341,13 @@ RSpec.describe SettlementLedgersController, :type => :controller do
             settlement_ledger = SettlementLedger.completed.first
             get :edit, id: settlement_ledger.id
           end
+
           it "ステータスコードが302であること" do
-            #pending '未実装'
             expect(response.status).to eq(302)
           end
 
 
           it "精算申請一覧画面にリダイレクトされること" do
-            #pending '未実装'
             expect(response).to redirect_to(settlement_ledgers_url)
           end
         end
@@ -507,7 +504,6 @@ RSpec.describe SettlementLedgersController, :type => :controller do
           end
 
           it "更新処理が行われないこと" do
-            #pending '未実装'
             expect(assigns[:settlement_ledger].content).not_to eq('test')
             expect(assigns[:settlement_ledger].note).not_to eq('test')
             expect(assigns[:settlement_ledger].price).not_to eq(5000)
@@ -518,7 +514,6 @@ RSpec.describe SettlementLedgersController, :type => :controller do
           end
 
           it "精算申請一覧画面にリダイレクトされること" do
-            #pending '未実装'
             expect(response).to redirect_to(settlement_ledgers_url)
           end
         end
@@ -533,13 +528,11 @@ RSpec.describe SettlementLedgersController, :type => :controller do
           end
 
           it "更新処理が行われないこと" do
-            #pending '未実装'
             expect(assigns[:settlement_ledger].content).not_to eq('test')
             expect(assigns[:settlement_ledger].note).not_to eq('test')
             expect(assigns[:settlement_ledger].price).not_to eq(5000)
           end
           it "精算申請一覧画面にリダイレクトされること" do
-            #pending '未実装'
             expect(response).to redirect_to(settlement_ledgers_url)
           end
         end
@@ -644,7 +637,6 @@ RSpec.describe SettlementLedgersController, :type => :controller do
             delete :destroy, id: settlement_ledger.id
           end
           it "申請書を削除する処理を行わないこと" do
-            #pending '未実装'
             expect(assigns[:settlement_ledger].deleted_at).to eq(DateTime.yesterday.to_time)
           end
           it "ステータスコードが302であること" do
@@ -663,7 +655,6 @@ RSpec.describe SettlementLedgersController, :type => :controller do
           end
 
           it "申請書を削除する処理を行わないこと" do
-            #pending '未実装'
             expect(assigns[:settlement_ledger].deleted_at).to eq(nil)
           end
           it "ステータスコードが302であること" do
@@ -684,7 +675,6 @@ RSpec.describe SettlementLedgersController, :type => :controller do
 
           it "申請書を削除する処理が行われていること" do
             expect(assigns[:settlement_ledger].deleted_at).not_to eq(nil)
-            #expect(assigns[:settlement_ledger].deleted_at).to be >= DateTime.now - 1
           end
           it "ステータスコードが302であること" do
             expect(response.status).to eq(302)
@@ -768,11 +758,9 @@ RSpec.describe SettlementLedgersController, :type => :controller do
             get :edit_for_settle, id: settlement_ledger.id
           end
           it "ステータスコードが302であること" do
-            #pending '未実装'
             expect(response.status).to eq(302)
           end
           it "精算申請一覧画面にリダイレクトされること" do
-            #pending '未実装'
             expect(response).to redirect_to(settlement_ledgers_url)
           end
         end
@@ -784,11 +772,9 @@ RSpec.describe SettlementLedgersController, :type => :controller do
             get :edit_for_settle, id: settlement_ledger.id
           end
           it "ステータスコードが302であること" do
-            #pending '未実装'
             expect(response.status).to eq(302)
           end
           it "精算申請一覧画面にリダイレクトされること" do
-            #pending '未実装'
             expect(response).to redirect_to(settlement_ledgers_url)
           end
         end
@@ -858,7 +844,6 @@ RSpec.describe SettlementLedgersController, :type => :controller do
           end
 
           it "申請書の更新がされていないこと" do
-            #pending '未実装'
             expect(assigns[:settlement_ledger].completed).to eq(nil)
             expect(assigns[:settlement_ledger].completed).not_to eq(DateTime.now -1)
             expect(assigns[:settlement_ledger].settlement_date).not_to eq(Date.today)
@@ -886,7 +871,6 @@ RSpec.describe SettlementLedgersController, :type => :controller do
           end
 
           it "申請書の更新がされていないこと" do
-            #pending '未実装'
             expect(assigns[:settlement_ledger].completed).to eq(nil)
             expect(assigns[:settlement_ledger].completed).not_to eq(DateTime.now -1)
             expect(assigns[:settlement_ledger].settlement_date).not_to eq(Date.today)
@@ -948,7 +932,6 @@ RSpec.describe SettlementLedgersController, :type => :controller do
               end
 
               it "精算結果の登録画面が表示されること" do
-                #pending '未実装'
                 expect(response).to render_template(:edit_for_settle)
               end
             end
@@ -960,7 +943,7 @@ RSpec.describe SettlementLedgersController, :type => :controller do
                 settlement_ledger = SettlementLedger.not_completed.not_deleted.first
                 allow(SettlementLedger).to receive(:find).and_return(settlement_ledger)
                 put :settle, id: settlement_ledger.id, settlement_ledger: {
-                  conpleted: 0,
+                  completed: 0,
                   settlement_date: Date.today,
                   settlement_note: 'test'
                 }
@@ -1000,11 +983,9 @@ RSpec.describe SettlementLedgersController, :type => :controller do
               end
 
               it "精算結果の登録画面が表示されること" do
-                #pending '未実装'
                 expect(response).to render_template(:edit_for_settle)
               end
             end
-
           end
         end
       end

@@ -12,45 +12,27 @@ class SettlementLedgersController < ApplicationController
     unless params[:target] == "all"
       @settlement_ledgers = @settlement_ledgers.not_completed.not_deleted
     end
-   @content = params[:content]
-   @note = params[:note]
-   @under_price = params[:under_price]
-   @over_price = params[:over_price]
-   @demand = params[:demand]
-   @application_date = params[:application_date]
-   @applicant_user_name = params[:applicant_user_name]
+    @content = params[:content]
+    @note = params[:note]
+    @under_price = params[:under_price]
+    @over_price = params[:over_price]
+    @demand = params[:demand]
+    @application_date = params[:application_date]
+    @applicant_user_name = params[:applicant_user_name]
 
-   @settlement_ledgers = @settlement_ledgers.like_content(@content).all if @content.present?
-   @settlement_ledgers = @settlement_ledgers.like_note(@note).all if @note.present?
-   @settlement_ledgers = @settlement_ledgers.under_price(@under_price).all if @under_price.present?
-   @settlement_ledgers = @settlement_ledgers.over_price(@over_price).all if @over_price.present?
-   @settlement_ledgers = @settlement_ledgers.like_demand(@demand).all if @demand.present?
-   @settlement_ledgers = @settlement_ledgers.like_application_date(@application_date).all if @application_date.present?
-   @settlement_ledgers = @settlement_ledgers.like_applicant_user_name(@applicant_user_name).all if @applicant_user_name.present?
-   @settlement_ledgers = @settlement_ledgers.page(params[:page])
+    @settlement_ledgers = @settlement_ledgers.like_content(@content).all if @content.present?
+    @settlement_ledgers = @settlement_ledgers.like_note(@note).all if @note.present?
+    @settlement_ledgers = @settlement_ledgers.under_price(@under_price).all if @under_price.present?
+    @settlement_ledgers = @settlement_ledgers.over_price(@over_price).all if @over_price.present?
+    @settlement_ledgers = @settlement_ledgers.like_demand(@demand).all if @demand.present?
+    @settlement_ledgers = @settlement_ledgers.like_application_date(@application_date).all if @application_date.present?
+    @settlement_ledgers = @settlement_ledgers.like_applicant_user_name(@applicant_user_name).all if @applicant_user_name.present?
+    @settlement_ledgers = @settlement_ledgers.page(params[:page])
     respond_to do |format|
       format.html
       format.js if request.xhr?
     end
   end
-
-#  20150611_indexアクションに統合
-#  def search
-#     params[:page] ||= 1
-#     @settlement_ledgers = SettlementLedger.order('ledger_number DESC')
-#     unless params[:target] == "all"
-#       @settlement_ledgers = @settlement_ledgers.not_completed.not_deleted
-#     end
-#     #respond_to do |format|
-#       #format.html
-#       #format.js if request.xhr?
-#     #end
-#     content = params[:content]
-#     @settlement_ledgers = @settlement_ledgers.like_content(content).all if content.present?
-#     @settlement_ledgers = @settlement_ledgers.page(params[:page])
-#     render :index
-#  end
-
 
   # GET /settlement_ledgers/new
   def new
@@ -140,7 +122,6 @@ class SettlementLedgersController < ApplicationController
   end
 
   def settle
-    #削除済みのものを登録しようとしたら一覧ページにリダイレクト
     if @settlement_ledger.deleted? or @settlement_ledger.completed?
       redirect_to settlement_ledgers_url
       return
@@ -155,7 +136,6 @@ class SettlementLedgersController < ApplicationController
         format.html { redirect_to settlement_ledgers_url, notice: '精算依頼を更新しました。' }
         format.json { head :no_content }
       else
-        #format.html { render action: 'edit' }
         format.html { render action: :edit_for_settle}
         format.json { render json: @settlement_ledger.errors, status: :unprocessable_entity }
       end
@@ -170,6 +150,6 @@ class SettlementLedgersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def settlement_ledger_params
-      params.require(:settlement_ledger).permit(:content, :note, :price,:demand, :application_date, :settlement_date, :settlement_note, :completed_at)
+      params.require(:settlement_ledger).permit(:content, :note, :price, :demand, :application_date, :settlement_date, :settlement_note, :completed_at)
     end
 end

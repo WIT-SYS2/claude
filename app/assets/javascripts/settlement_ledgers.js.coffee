@@ -25,8 +25,6 @@ $ ->
   else
     $("a[href = '#all']").tab('show')
     
-#  $('#conditionTab a:first').tab('show')
-    
   $('a[data-toggle="tab"]').on('shown.bs.tab', (e) ->
     document.cookie = e.target.toString().match(/#.+/gi)[0].replace("#", "")
     $.ajax

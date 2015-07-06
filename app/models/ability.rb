@@ -5,7 +5,7 @@ class Ability
     user ||= User.new
 
     can :manage, User if user.has_role? :admin
-    can [:read, :create, :search], SettlementLedger
+    can [:read, :create], SettlementLedger
     can :manage, SettlementLedger if user.has_role? :treasurer
     can [:update, :destroy], SettlementLedger, applicant_user_id: user.id
 

@@ -332,49 +332,4 @@ describe SettlementLedger do
       it { expect { ledger.send(:assign_ledger_number) }.to change(ledger, :ledger_number).to("#{Rails.configuration.ledger_number_prefix}011") }
     end
   end
-=begin
-  describe "スコープ" do
-    before{
-      FactoryGirl.create(:settlement_ledger,
-                      ledger_number: 'AAA-00001',
-                      completed_at: nil,
-                      deleted_at: nil,
-                      content: 'test1',
-                      note: 'test1',
-                      price: 500,
-                      demand: 'test1。',
-                      application_date: 3.days.since.to_date,
-                      applicant_user_name: 'システム管理者'
-      )
-      FactoryGirl.create(:settlement_ledger,
-                      ledger_number: 'AAA-00002',
-                      completed_at: 3.days.since.to_date,
-                      deleted_at: 2.days.since.to_date ,
-                      content: 'test1',
-                      note: 'test2',
-                      price: 750,
-                      demand: 'test2。',
-                      application_date: 1.days.since.to_date,
-                      applicant_user_name: '利用者1'
-      )
-      FactoryGirl.create(:settlement_ledger,
-                      ledger_number: 'AAA-00003',
-                      completed_at: nil,
-                      deleted_at: 1.days.since.to_date,
-                      content: 'test2',
-                      note: 'test3',
-                      price: 1000,
-                      demand: 'test1。',
-                      application_date: 3.days.since.to_date,
-                      applicant_user_name: '利用者2'
-      )
-    }
-
-    describe 'completed' do
-      it{ expect(SettlementLedger.completed.all).to have(1)}
-    end
-
-
-  end
-=end
 end
